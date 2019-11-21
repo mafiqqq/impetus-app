@@ -1,0 +1,72 @@
+.dropdown {
+    display: flex;
+    
+    float: left;
+    background-color: white;
+    position: relative;
+    margin-right: 20px;
+  }
+  
+  .dropdown ul {
+    
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 45px;
+    width: 100px;
+    background-color: white;
+    font-weight: bold;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown li a {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .dropdown li {
+    padding: 8px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .dropdown li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown li:hover {
+    background-color: #e5e5e5;
+    color: white;
+  }
+  
+  .dropdown .button {
+      cursor: pointer;
+    background-image: url("../img/Hamburger_icon.png");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    width: 55px;
+    height: 30px;
+    background-color: white;
+    padding: 0;
+    margin: 3px 0 0 0;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .dropdown .button:before {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: white transparent transparent transparent;
+    right: 6px;
+    top: 18px;
+  }
+
+  .react-confirm-alert-overlay{
+      background: rgba(255,255,255,0);
+  }

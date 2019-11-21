@@ -1,0 +1,231 @@
+
+# type User {
+#   id: ID!
+#   name: String
+#   friends: [User] @relation(name: "FRIENDS", direction: "BOTH")
+#   reviews: [Review] @relation(name: "WROTE", direction: "OUT")
+#   avgStars: Float
+#     @cypher(
+#       statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))"
+#     )
+#   numReviews: Int
+#     @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN COUNT(r)")
+# }
+
+# type Business {
+#   id: ID!
+#   name: String
+#   address: String
+#   city: String
+#   state: String
+#   reviews: [Review] @relation(name: "REVIEWS", direction: "IN")
+#   categories: [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+# }
+
+# type Review {
+#   id: ID!
+#   stars: Int
+#   text: String
+#   date: Date
+#   business: Business @relation(name: "REVIEWS", direction: "OUT")
+#   user: User @relation(name: "WROTE", direction: "IN")
+# }
+
+# type Category {
+#   name: ID!
+#   businesses: [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+# }
+
+# type Query {
+#   usersBySubstring(substring: String): [User]
+#     @cypher(
+#       statement: "MATCH (u:User) WHERE u.name CONTAINS $substring RETURN u"
+#     )
+# }
+
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+
+type Accident {
+   accidentID: String!
+   policeNum: String
+   accidentDate: String
+   accidentTime: String
+   street: String
+   postcode: String
+   city: String
+   state: String
+   latitude: String
+   longitude: String
+   involves: [Vehicle] @relation(name: "INVOLVED_IN", direction: "IN")
+   claims: [Claim] @relation(name: "BASED_ON", direction: "IN")
+   witnesses: [Person] @relation(name: "WITNESS_OF", direction: "IN")
+}
+
+type Vehicle {
+   vehicleID: String!
+   plateNumber: String
+   brand: String
+   model: String
+   manufacturedYear: String
+   vin: String
+   accidents: [Accident] @relation(name: "INVOLVED_IN", direction: "OUT")
+   garage: [Repaired_In]
+   passengers: [Person] @relation(name: "PASSENGER_OF", direction: "IN")
+   drivers: [Person] @relation(name: "DRIVER_OF", direction:"IN")
+}
+
+type Person {
+   personID: String!
+   firstName: String
+   lastName: String
+   icNum: String
+   phoneNum: String
+   email: String
+   buildingNumber: String
+   street: String
+   postcode: String
+   city: String
+   state: String
+   witness: [Accident] @relation(name: "WITNESS_OF", direction:"OUT")
+   claims: [Claim] @relation(name: "MADE_A", direction:"OUT")
+   drivers: [Vehicle] @relation(name: "DRIVER_OF", direction:"OUT")
+   passengers: [Vehicle] @relation(name: "PASSENGER_OF", direction:"OUT")
+   healtcares: [Healed_In]
+   lawyers: [Lawyer_Of]
+
+}
+
+type Claim {
+   claimID: String!
+   value: String
+   status: String
+   score: String
+   reportedDate: String
+   description: String
+   accidents: [Accident] @relation(name: "BASED_ON", direction:"OUT")
+   persons: [Person] @relation(name: "MADE_A", direction: "IN")
+
+}
+
+type Garage {
+   garageID: String!
+   garageName: String
+   street: String
+   postcode: String
+   city: String
+   state: String
+   vehicles: [Repaired_In]
+
+}
+
+type Healthcare {
+   healthcareID: String!
+   healthcareName: String
+   street: String
+   postcode: String
+   city: String
+   state: String
+   of_persons: [Healed_In]
+
+}
+
+type Lawfirm {
+   lawfirmID: String!
+   lawfirmName: String
+   street: String
+   postcode: String
+   city: String
+   state: String
+   of_persons: [Lawyer_Of]
+
+}
+
+type Lawyer_Of @relation(name: "LAWYER_OF"){
+   from: Lawfirm
+   to: Person
+   lawyerName: String
+}
+
+type Healed_In @relation(name: "HEALED_IN"){
+   from: Person
+   to: Healthcare
+   doctorName: String
+}
+
+type Repaired_In @relation(name: "REPAIRED_IN"){
+   from: Vehicle
+   to: Garage
+   adjusterName: String
+}
+
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+#IMPETUS TEST
+
+# type Club {
+#    _id: Long!
+#    id: String!
+#    image: String
+#    name: String!
+#    in_league: League @relation(name: "IN_LEAGUE", direction: "OUT")
+#    transfers_from_club: [Transfer] @relation(name: "FROM_CLUB", 
+#                                              direction: "IN")
+#    transfers_to_club: [Transfer] @relation(name: "TO_CLUB",           
+#                                            direction: "IN")
+# }
+
+# type Transfer {
+#    _id: Long!
+#    date: Date!
+#    id: String!
+#    value: Float!
+#    of_player: [Player] @relation(name: "OF_PLAYER", 
+#                                  direction: "OUT")
+#    from_club: [Club] @relation(name: "FROM_CLUB", direction: "OUT")
+#    to_club: [Club] @relation(name: "TO_CLUB", direction: "OUT")
+# }
+
+# type League {
+#    _id: Long!
+#    href: String
+#    id: String!
+#    name: String!
+#    in_country: Country @relation(name: "IN_COUNTRY",
+#                                  direction: "OUT")
+#    clubs: [Club] @relation(name: "IN_LEAGUE", direction: "IN")
+# }
+
+# type Country {
+#    _id: Long!
+#    name: String!
+#    leagues: [League] @relation(name: "IN_COUNTRY", direction: "IN")
+# }
+
+# type Player {
+#    _id: Long!
+#    id: String!
+#    image: String
+#    name: String!
+#    transfers: [Transfer] @relation(name: "OF_PLAYER", 
+#                                    direction: "IN")
+# }

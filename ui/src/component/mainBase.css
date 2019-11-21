@@ -1,0 +1,69 @@
+.MainBase {
+    /* position: -webkit-sticky; 
+    position: sticky; */
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(-225deg, rgb(0, 102, 153)0%, rgb(4, 70, 101) 48%, rgb(0, 102, 153)100%);
+  }
+  
+  
+  .navBar {
+   
+    color: white;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 0;
+    margin: 0 0 0 80px;
+  }
+  
+  .impetus {
+    line-height: 1;
+    height: 100px;
+    font-family: Adobe Song Std;
+    font-size: 80px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navBar h5 {
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    opacity: 0.5;
+    padding: 0;
+    margin: 0 0 0 100px;
+  }
+  
+  .link {
+    border-left: 1px white;
+    float: right;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+  }
+  
+  li p:hover {
+    text-decoration: underline;
+  }
+
+
+  
+  .tagline {
+    float: left;
+    padding-top: 0;
+    padding-bottom: 10px;
+  }
+  
+  .navLinks li {
+    line-height: 0.5;
+    border-right: solid;
+    border-right-width: 1px;
+    border-right-color: white;
+    padding: 0 50px 0 60px;
+    margin-top: 20px;
+  }
