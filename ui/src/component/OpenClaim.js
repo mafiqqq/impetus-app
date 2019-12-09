@@ -5,7 +5,8 @@ import ClaimDetails from './ClaimDetails.js';
 import Workshop from './Workshop.js';
 import Location from './Location.js';
 import LocationView from './LocationView.js';
-import Dropdown from './HamburgerB.js';
+import NodeGraphExpand from './NodeGraphExpand.js';
+import Dropdown from './ClaimHamburgerB.js';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import {getClaimsQuery } from '../queries/queries.js'; 
@@ -21,7 +22,7 @@ function OpenClaim() {
     // };
 
     const location = useLocation();
-    console.log(location);
+    // console.log(location);
     
     // render() {
         
@@ -39,7 +40,10 @@ function OpenClaim() {
                 <span className="tab">
                     <Tabs>
                         <TabList>
-                            <Dropdown />
+                            <Dropdown 
+                            claimID={location.state.claimID}
+                            status={location.state.status}
+                            />
                             <Tab><h4>Claim Details</h4></Tab>
                             <Tab><h4>Workshop</h4></Tab>
                             <Tab><h4>Location View</h4></Tab>
@@ -61,7 +65,7 @@ function OpenClaim() {
                             </ClaimDetails>
                         </TabPanel>
                         <TabPanel>
-                            <Workshop />
+                            <NodeGraphExpand />
                         </TabPanel>
                         <TabPanel>
                             <LocationView />

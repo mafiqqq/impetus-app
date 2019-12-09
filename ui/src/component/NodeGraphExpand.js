@@ -3,7 +3,7 @@ import { Sigma, RandomizeNodePositions, RelativeSize, NeoCypher } from "react-si
 import SigmaLoader from "../Sigma/Loader";
 import NodeShapes from "../Sigma/NodeShapes";
 
-class NodeGraph extends Component {
+class NodeGraphExpand extends Component {
 
     graphData;
     constructor(props) {
@@ -108,7 +108,7 @@ class NodeGraph extends Component {
         // };
         return (
 
-            <div className="sigma-container" style={{ height: "100%", width: "100%" }}>
+            <div className="sigma-container" style={{ height: "1000px", width: "1750px" }}>
                 {/* <Sigma 
             renderer="canvas" 
             style={this.state.settings}
@@ -129,10 +129,10 @@ class NodeGraph extends Component {
                         user="neo4j"
                         password="root"
                         query=
-                        "MATCH (c:Claim {claimID:'6000'})-[r]-(a) RETURN c,r,a"
+                        "MATCH (c:Claim {claimID:'6000'})-[r]-(a)-[d]-(e)-[g]-(h) RETURN c,r,a,d,e,g,h"
                         onGraphLoaded={() => console.log("Graph loaded")} >
                     </NeoCypher>
-                    <RelativeSize initialSize={15} />
+                    <RelativeSize initialSize={35} />
                     <RandomizeNodePositions />
                 </Sigma>
             </div>
@@ -165,4 +165,4 @@ class NodeGraph extends Component {
     
 // }
 
-export default NodeGraph;
+export default NodeGraphExpand;

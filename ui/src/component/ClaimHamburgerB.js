@@ -1,42 +1,33 @@
 import React from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import "./hamburgerB.css";
+import Reject from "./RejectClaimpu";
+import Settle from "./SettleClaimpu";
+import {updateClaimMutation} from "../queries/queries";
+import { graphql } from 'react-apollo';
+import {useLocation} from 'react-router';
+
+
 
 
 class Dropdown extends React.Component {
-
-  // this is the js for popup
-  submit = () => {
-    confirmAlert({
-      title: 'Confirmation',
-      message: 'Are you sure this claim has been settled?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => ''
-        },
-        {
-          label: 'No',
-          onClick: () => ''
-        }
-      ]
-    })
-  }
-
+  
 
   // hamburgur dropdown display
-    constructor(){
+    constructor(props){
      super();
     
      this.state = {
            displayMenu: false,
+          //  claimID: this.props.claimID,
+          //  status: this.props.status
          };
     
       this.showDropdownMenu = this.showDropdownMenu.bind(this);
       this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
     
     };
+
+    
     
     showDropdownMenu(event) {
         event.preventDefault();
@@ -55,19 +46,31 @@ class Dropdown extends React.Component {
     }
     
       render() {
+        // const location = useLocation();
+        // console.log(location);
+        // console.log(this.props.claimID);
+        // console.log(this.props.status);
+        // console.log(this.status);
+        // updateClaimID = this.props.claimID
+        // updateClaimStatus = this.props.status
         return (
             <div  className="dropdown">
-             <div className="button" onClick={this.showDropdownMenu}></div>
+             <button className="ham" onClick={this.showDropdownMenu}></button>
     
               { this.state.displayMenu ? (
-              <ul className="dropChoices"
+              <div className="dropChoices"
               ref={(element) => {
                 this.dropdownMenu = element;
               }}>
-             <li><a onClick={this.submit}>Settle Claim</a></li>
-             <li><a onClick={this.submit}>Reject Claim</a></li>
+              
+             <Settle
+             claimID={this.props.claimID}
+             status={this.props.status}/>
+             <Reject
+             claimID={this.props.claimID}
+             status={this.props.status}/>
           
-              </ul>
+              </div>
             ):
             (
               null
@@ -80,4 +83,4 @@ class Dropdown extends React.Component {
       }
     }
     
-    export default Dropdown;
+    export default graphql(updateClaimMutation)(Dropdown);

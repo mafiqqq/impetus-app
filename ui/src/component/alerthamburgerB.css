@@ -1,0 +1,37 @@
+.dropdown {
+  display: flex;
+  float: left;
+  background-color: white;
+  position: relative;
+  margin-right: 20px;
+}
+
+.dropChoices {
+  position: relative;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  top: 45px;
+  width: 110px;
+  background-color: white;
+  font-weight: normal;
+  position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+
+.ham {
+  cursor: pointer;
+  background-image: url("../img/Hamburger_icon.png");
+  background-size: 35px;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 30px;
+  background-color: white;
+  padding: 0;
+  margin: 3px 0 0 0;
+  font-weight: bold;
+  color: black;
+  border: none;
+}

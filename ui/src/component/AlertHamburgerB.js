@@ -1,32 +1,14 @@
 import React from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-import "./hamburgerB.css";
+import "./alerthamburgerB.css";
+import CreateACase from "./CreateACase";
+import CloseAlert from "./CloseAlert";
+import {graphql} from 'react-apollo';
 
 
 class Dropdown extends React.Component {
 
-  // this is the js for popup
-  submit = () => {
-    confirmAlert({
-      title: 'Confirmation',
-      message: 'Are you sure this claim has been settled?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => ''
-        },
-        {
-          label: 'No',
-          onClick: () => ''
-        }
-      ]
-    })
-  }
-
-
   // hamburgur dropdown display
-    constructor(){
+    constructor(props){
      super();
     
      this.state = {
@@ -57,17 +39,18 @@ class Dropdown extends React.Component {
       render() {
         return (
             <div  className="dropdown">
-             <div className="button" onClick={this.showDropdownMenu}></div>
+             <button className="ham" onClick={this.showDropdownMenu}></button>
     
               { this.state.displayMenu ? (
-              <ul className="dropChoices"
+              <div className="dropChoices"
               ref={(element) => {
                 this.dropdownMenu = element;
               }}>
-             <li><a onClick={this.submit}>Settle Claim</a></li>
-             <li><a onClick={this.submit}>Reject Claim</a></li>
-          
-              </ul>
+             <CreateACase
+             claimID={this.props.claimID}/>
+             <CloseAlert
+             claimID={this.props.claimID}/>
+              </div>
             ):
             (
               null

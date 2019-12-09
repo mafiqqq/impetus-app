@@ -39,7 +39,9 @@ const getClaimsQuery = gql`
 {
 Claim{
         claimID
-        score
+        normalScore{
+            score
+        }
         value
         status
         reportedDate
@@ -58,6 +60,66 @@ Claim{
     }
 }
 `
+
+//get Alert Lisy query
+const getAlertsQuery = gql`
+{
+Claim{
+        claimID
+        alertScore {
+            score
+        }
+        value
+        status
+        reportedDate
+        description
+        accidents {
+            city
+            policeNum
+            accidentDate 
+        }
+        persons {
+            firstName
+            lastName
+            icNum
+            phoneNum
+        }
+        
+    }
+}
+`
+
+//Get Cases Query
+const getCasesQuery = gql`
+{
+    Case{
+    caseID
+  	comment
+    task
+    dueDate
+    caseStatus
+    claims{
+      claimID
+      reportedDate
+      value
+      description
+      status
+      accidents{
+        policeNum
+      }
+      persons{
+        firstName
+        lastName
+        phoneNum
+        icNum
+      }
+    }
+  }
+}
+`
+
+
+
 
 //Get Accident Location
 const getLocationAccidentQuery = gql`
@@ -112,6 +174,16 @@ query($id: String){
         }
       }
         
+    }
+}
+`
+
+//Settle Claim Update Mutation 
+const updateClaimMutation = gql`
+mutation($claimID: String!, $status: String!){
+    UpdateClaim(claimID: $claimID, status: $status){
+        claimID
+        status
     }
 }
 `
@@ -179,11 +251,15 @@ query($id: String){
 // `
 
 
-export { 
-    getClaimsQuery, 
-    getClaimQuery, 
-    getLocationAccidentQuery, 
-    getAccidentsQuery, 
-    getDynamicAccLocation
+export {
+    getClaimsQuery,
+    getClaimQuery,
+    getLocationAccidentQuery,
+    getAccidentsQuery,
+    getDynamicAccLocation,
+    updateClaimMutation,
+    getAlertsQuery,
+    getCasesQuery
+
 };
-// getPlayersQuery, getClubsQuery, createPlayerMutation, getPlayerQuery, 
+// getPlayersQuery, getClubsQuery, createPlayerMutation, getPlayerQuery,

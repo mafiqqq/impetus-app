@@ -15,3 +15,7 @@
   .score {
     size: large;
   }
+
+  button .fab-item {
+    background-color: none;
+  }

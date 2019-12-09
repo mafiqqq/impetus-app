@@ -1,0 +1,160 @@
+.OpenedClaim {
+    overflow: hidden;
+    background-color: rgb(236, 236, 236);
+    height: 25px;
+    border-bottom: 1px solid white;
+}
+
+.x {
+    float: right;
+    background-color: white;
+    border: 0;
+    margin: 0;
+}
+
+.openedClaimId {
+    background-color: white;
+    border: 0;
+}
+
+.claimId {
+    display: flex;
+    height: 25px;
+    justify-content: space-between;
+    width: 100px;
+    background-color: white;
+    border: 0;
+    margin: 0 50px 0 50px;
+    border-bottom: 2px solid black;
+}
+
+.tab {
+    float: left;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    background-color: white;
+    margin: 5px 0 10px 0;
+    padding: 0;
+    display: flex;
+    border-bottom: 1px solid white;
+}
+
+.blank{
+    float: left;
+    width: 30px;
+}
+.column,
+.columnWhite {
+    float: left;
+    width: 32.33%;
+    margin: 0 5px 0 7px;
+    padding: 0;
+    height: 400px;
+    background-color: rgb(236, 236, 236);
+    border-radius: 20px;
+}
+
+.columnWhite {
+    background-color: white;
+}
+
+.columnWhite h6 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-family: Segoe UI;
+    font-size: 16px;
+    padding: 0;
+    margin: 10px 110px 0 10px;
+    margin-block-end: 0;
+}
+
+.column p {
+    margin: 0 0 0 10px;
+}
+
+.columnWhite p {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    margin: 0 110px 20px 10px;
+}
+
+.network,
+.claimDetail,
+.scoreCardRed {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 5px;
+    margin: 0;
+    height: 30px;
+}
+
+.scoreCardRed {
+    background-color: rgba(255, 36, 36, 0.75);
+}
+
+.claimDetail {
+    background-color: rgb(236, 236, 236);
+}
+
+.claimDetail h2,
+.network h2,
+.scoreCardRed h2 {
+    margin: 0;
+    padding: 2px;
+    font-size: 18px;
+}
+
+.react-tabs__tab-list {
+    border-bottom: 1px solid white;
+    margin: 0 0 5px 0;
+    padding: 0 0 2px 0;
+    ;
+}
+
+/* caseDetail   */
+
+.row2 {
+    width: 1394px;
+    height: 400px;
+    Padding: 0;
+}
+
+.caseDetails  {
+    float: left;
+    width: 50%;
+    height: 100%;
+    padding: 50px;
+    border-right: 1px solid black;
+}
+.divider{
+    float: left;
+    width: 50%;
+    height: 100%;
+
+}
+.actions {
+    display: flex;
+    justify-content: space-around
+}
+
+.button-red,
+.button-green {
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.task{
+    position: center;    
+    height:100%;
+}

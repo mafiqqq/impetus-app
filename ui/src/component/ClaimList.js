@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { Container, Button } from 'react-floating-action-button'
 import { graphql } from 'react-apollo';
 import { getClaimsQuery } from '../queries/queries.js';
 import "./claim.css";
@@ -32,42 +33,45 @@ class ClaimList extends Component {
             return (<div>Loading Claims...</div>);
         } else {
             return data.Claim.map(claim => {
+                return (claim.normalScore.map(normal => {
+                    return (
+
+                        <tr>
+                            {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
+                            <td >
+                                <Link to={
+                                    {
+                                        pathname: "/OpenClaim",
+                                        state: {
+                                            claimID: claim.claimID,
+                                            reportedDate: claim.reportedDate,
+                                            icNum: claim.persons.map(x => x.icNum),
+                                            status: claim.status,
+                                            description: claim.description,
+                                            firstName: claim.persons.map(x => x.firstName),
+                                            lastName: claim.persons.map(x => x.lastName),
+                                            phoneNum: claim.persons.map(x => x.phoneNum),
+                                            value: claim.value,
+                                            policeNum: claim.accidents.map(x => x.policeNum)
+                                        }
+                                    }
+                                }>{claim.claimID}</Link>
+                            </td>
+                            <td>{claim.status}</td>
+                            <td>{normal.score}</td>
+                            <td>RM {claim.value}</td>
+                            <td>{claim.persons.map(x => x.firstName)}</td>
+                            <td>{claim.persons.map(x => x.lastName)}</td>
+                            <td>{claim.accidents.map(x => x.city)}</td>
+                            <td>{claim.reportedDate}</td>
+                        </tr>
+                    )
+                }))
                 // const claimTo = {
                 //     pathname: `/OpenClaim/{claim.claimID}`
                 // }
 
-                return (
 
-                    <tr>
-                        {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
-                        <td >
-                            <Link to={
-                                {
-                                    pathname: "/OpenClaim",
-                                    state: {
-                                        claimID: claim.claimID,
-                                        reportedDate: claim.reportedDate,
-                                        icNum: claim.persons.map(x => x.icNum),
-                                        status: claim.status,
-                                        description: claim.description,
-                                        firstName: claim.persons.map(x => x.firstName),
-                                        lastName: claim.persons.map(x => x.lastName),
-                                        phoneNum: claim.persons.map(x => x.phoneNum),
-                                        value: claim.value,
-                                        policeNum: claim.accidents.map(x => x.policeNum) 
-                                    }
-                                }
-                            }>{claim.claimID}</Link>
-                        </td>
-                        <td>{claim.status}</td>
-                        <td>{claim.score}</td>
-                        <td>RM {claim.value}</td>
-                        <td>{claim.persons.map(x => x.firstName)}</td>
-                        <td>{claim.persons.map(x => x.lastName)}</td>
-                        <td>{claim.accidents.map(x => x.city)}</td>
-                        <td>{claim.reportedDate}</td>
-                    </tr>
-                )
             })
 
 
@@ -91,6 +95,12 @@ class ClaimList extends Component {
                     {this.displayClaims()}
                 </table>
                 {/* <ClaimDetails claimID={ this.state.selected }/> */}
+                <Container>
+                    <Button tooltip="Calculate the score of claims"
+                        onClick={() => alert('this is for calculate score')}>
+                        Calculate
+                </Button>
+                </Container>
             </div>
             // <div>
             //     <ul id="claim-list">

@@ -1,4 +1,4 @@
-.dropdown {
+/* .dropdown {
     display: flex;
     
     float: left;
@@ -66,6 +66,19 @@
     right: 6px;
     top: 18px;
   }
+
+  .react-confirm-alert-overlay{
+      background: rgba(255,255,255,0);
+  } */
+
+  .dropdown {
+    display: flex;
+    float: left;
+    background-color: white;
+    position: relative;
+    margin-right: 20px;
+  }
+ 
 
   .react-confirm-alert-overlay{
       background: rgba(255,255,255,0);

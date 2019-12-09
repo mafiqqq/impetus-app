@@ -72,6 +72,15 @@ type Accident {
    witnesses: [Person] @relation(name: "WITNESS_OF", direction: "IN")
 }
 
+type Case {
+   caseID: Int!
+   dueDate: String
+   comment: String
+   task: String
+   caseStatus: String
+   claims: [Claim] @relation(name: "CREATED_A", direction: "IN")
+}
+
 type Vehicle {
    vehicleID: String!
    plateNumber: String
@@ -110,13 +119,24 @@ type Claim {
    claimID: String!
    value: String
    status: String
-   score: String
+   score: Int
+   normalScore: [Claim]
+   @cypher(
+      statement: "MATCH (this) WHERE this.score<=500 RETURN distinct this"
+   )
    reportedDate: String
    description: String
+   alertScore: [Claim]
+    @cypher(
+      statement: "MATCH (this) WHERE this.score>500  RETURN distinct this"
+    )
    accidents: [Accident] @relation(name: "BASED_ON", direction:"OUT")
    persons: [Person] @relation(name: "MADE_A", direction: "IN")
+   cases: [Case] @relation(name: "CREATED_A", direction: "OUT")
 
 }
+
+# apsites(sort: String, limit: Int, start: Int, where: JSON): [Apsite]
 
 type Garage {
    garageID: String!
@@ -151,6 +171,12 @@ type Lawfirm {
 
 }
 
+type ClaimLog {
+   claimLogID: String!
+   timeLog: LocalDateTime
+   logStatus: String
+}
+
 type Lawyer_Of @relation(name: "LAWYER_OF"){
    from: Lawfirm
    to: Person
@@ -168,6 +194,12 @@ type Repaired_In @relation(name: "REPAIRED_IN"){
    to: Garage
    adjusterName: String
 }
+
+# type Query {
+#    alert(filter: {
+#       score: Int
+#    }): [Claim!]!
+# }
 
 #IMPETUS TEST
 #IMPETUS TEST
