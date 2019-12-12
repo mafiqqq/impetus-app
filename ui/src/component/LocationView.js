@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import { graphql } from 'react-apollo';
-import { getLocationAccidentQuery } from '../queries/queries.js';
+import { getLocationAccidentQuery, getDynamicAccLocation } from '../queries/queries.js';
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import Logo from '../img/carAccident.svg';
 
@@ -63,25 +63,32 @@ class LocationView extends Component {
     loadAccidentMarkers = () => {
 
         var data = this.props.data;
-        // console.log(this.props);
         if (data.loading) {
             return (<div>Loading Accidents location...</div>)
         } else {
-            return data.Accident.map(accident => {
-                return (
-                    <Marker
-                        key={accident.accidentID}
-                        latitude={parseFloat(accident.latitude)}
-                        longitude={parseFloat(accident.longitude)}
-                    >
-                        <button className="marker-btn" onClick={(e) => {
-                            e.preventDefault();
-                            this.setSelectedAccident(accident);
-                        }}>
-                            <img style={{ width: "30px", height: "30px" }} src={Logo} />
-                        </button>
-                    </Marker>
-                );
+            return data.Claim.map(accident => {
+                // console.log(accident.accidents.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d => d.accidents)))))
+
+                return accident.accidents.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d => d.accidents.map(f => {
+                    return (
+                        <Marker
+                            key={f.accidentID}
+                            latitude={parseFloat(f.latitude)}
+                            longitude={parseFloat(f.longitude)}
+                        >
+                            {/* {console.log(f.accidentID)} */}
+                            <button className="marker-btn" onClick={(e) => {
+                                e.preventDefault();
+                                // console.log(f);
+                                // this.setState({selectedAccident: d})
+                                this.setSelectedAccident(d);
+                            }}>
+                                <img style={{ width: "30px", height: "30px" }} src={Logo} />
+                            </button>
+                        </Marker>
+                    );
+                })))))
+
             });
         }
 
@@ -97,19 +104,25 @@ class LocationView extends Component {
                     mapStyle="mapbox://styles/impetusfd/ck2vpayt604u41cmusvoacvhz"
                 >
                     {this.loadAccidentMarkers()}
+                    {/* {console.log(JSON.stringify(this.state.selectedAccident))} */}
                     {this.state.selectedAccident !== null ? (
+
                         <Popup
-                            latitude={parseFloat(this.state.selectedAccident.latitude)}
-                            longitude={parseFloat(this.state.selectedAccident.longitude)}
+
+                            // latitude={this.state.selectedAccident.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d=>d.accidents.map(f => f.latitude)))))}
+                            // longitude={this.state.selectedAccident.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d=>d.accidents.map(f => f.longitude)))))}
+                            {...console.log(this.state.selectedAccident)}
+                            latitude={parseFloat(this.state.selectedAccident.accidents.map(f => f.latitude))}
+                            longitude={parseFloat(this.state.selectedAccident.accidents.map(f => f.longitude))}
                             onClose={this.closePopup}
                         >
                             <div className="popup-marker">
                                 <p>
-                                    <b>Location: </b> {this.state.selectedAccident.street} {", "}
-                                    {this.state.selectedAccident.city}
+                                    <b>Location: </b> {this.state.selectedAccident.accidents.map(f => f.street)} {", "}
+                                    {this.state.selectedAccident.accidents.map(f => f.city)}
                                 </p>
                                 <p>
-                                    <b>Claim ID: {this.state.selectedAccident.claims.map(x => x.claimID)}</b>
+                                    <b>Claim ID: {this.state.selectedAccident.accidents.map(f => f.claims.map(g => g.claimID + " "))} </b>
                                 </p>
                             </div>
                         </Popup>
@@ -122,4 +135,12 @@ class LocationView extends Component {
 
 }
 
-export default graphql(getLocationAccidentQuery)(LocationView);
+export default graphql(getDynamicAccLocation, {
+    options: (props) => {
+        return {
+            variables: {
+                id: props.claimID
+            }
+        };
+    }
+})(LocationView);

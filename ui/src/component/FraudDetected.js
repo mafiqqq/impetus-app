@@ -96,7 +96,9 @@ const FraudDetected = props => {
                         <button className="button-green" onClick={e => {
                             UpdateCase().then(()=>{
                                 UpdateClaim().then(() => {
-                                    CreateClaimLog();
+                                    CreateClaimLog().then(() =>{
+                                        document.location= "/CaseList"
+                                    })
                                 })
                             })
                             close();

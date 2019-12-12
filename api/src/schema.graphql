@@ -140,6 +140,10 @@ type Claim {
 
 }
 
+input Filters {
+   claimID: String
+}
+
 # apsites(sort: String, limit: Int, start: Int, where: JSON): [Apsite]
 
 type Garage {
@@ -181,13 +185,6 @@ type ClaimLog {
    logStatus: String
 }
 
-type _Neo4jLocalDateTimeInput {
-  year: Int
-  month: Int
-  day: Int
-  formatted: String
-}
-
 type Lawyer_Of @relation(name: "LAWYER_OF"){
    from: Lawfirm
    to: Person
@@ -205,6 +202,12 @@ type Repaired_In @relation(name: "REPAIRED_IN"){
    to: Garage
    adjusterName: String
 }
+
+
+# type Query {
+#    claims: [Claim]
+# }
+
 
 # type Query {
 #    alert(filter: {

@@ -19,7 +19,7 @@ query($id: String){
         description
         value
         status
-        reportedDate
+        reportedDate  
         persons{
             firstName
             lastName
@@ -142,12 +142,14 @@ const getLocationAccidentQuery = gql`
 }
 `
 
+
 //get Claims query
 const getDynamicAccLocation = gql`
 query($id: String){
     Claim(claimID: $id)  {
-        claimID
-        accidentID
+      claimID
+    accidents{
+      accidentID
     	involves{
         vehicleID
         passengers{
@@ -159,6 +161,9 @@ query($id: String){
               longitude
               street
               city
+              claims {
+                claimID
+              }
             }
           }
         }
@@ -171,11 +176,14 @@ query($id: String){
               longitude
               street
               city
+              claims {
+                claimID
+              }
             }
           }
         }
       }
-        
+      }
     }
 }
 `

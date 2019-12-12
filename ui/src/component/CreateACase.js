@@ -7,7 +7,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { getCasesQuery } from '../queries/queries.js';
 import CaseList from './CaseList.js';
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 
 const CREATE_CASE_MUTATION = gql`
 mutation CreateCase($caseID: Int!, $dueDate:String! , $comment:String! , $task: String!, $caseStatus: String){
@@ -66,22 +66,22 @@ const CreateACase = props => {
     // var count = caseID;
     function getFormattedDate() {
         var date = new Date();
-        var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "T" +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "T" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         var res = str.toString();
         return res;
     }
 
     const [createCaseState, setCreateCaseState] = useState(props)
-    const [caseID, setCaseID] = useState(9003)
+    const [caseID, setCaseID] = useState(9000)
     const [dueDate, setDueDate] = useState("")
     const [comment, setComment] = useState("")
     const [task, setTask] = useState("")
     const [caseStatus, setCaseStatus] = useState("")
     const [CreateCase, { loading, error }] = useMutation(CREATE_CASE_MUTATION, {
-        
+
         variables: {
             caseID: caseID,
-            dueDate: dueDate,       
+            dueDate: dueDate,
             comment: comment,
             task: task,
             caseStatus: "Open for Enquiry"
@@ -90,12 +90,12 @@ const CreateACase = props => {
     const [AddCaseClaims, { loadingTrue }] = useMutation(CREATE_CASE_RELATIONSHIP_MUTATION, {
         variables: {
             claimID: createCaseState.claimID,
-            caseID: caseID  
+            caseID: caseID
         },
         refetchQueries: [{ query: getCasesQuery }]
     })
 
-    const [CreateClaimLog, {loadingLog}] = useMutation(CREATE_CLAIMLOG_MUTATION, {
+    const [CreateClaimLog, { loadingLog }] = useMutation(CREATE_CLAIMLOG_MUTATION, {
         variables: {
             claimLogID: createCaseState.claimID,
             timeLog: getFormattedDate(),
@@ -109,11 +109,11 @@ const CreateACase = props => {
         CreateCase().then(() => {
             AddCaseClaims().then(() => {
                 CreateClaimLog().then(() => {
-                    document.location= "/CaseList"
+                    document.location = "/CaseList"
                 })
             })
         });
-       
+
         // {<Redirect to='/CaseList' />}
         // if(!error) {
         //     console.log("Completed");
@@ -126,8 +126,14 @@ const CreateACase = props => {
 
 
     useEffect(() => {
-        // setCaseID(caseID + 1)
+        const localData = localStorage.getItem('caseID')
+        if (localData)
+            setCaseID(JSON.parse(localData)+1);
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem("caseID", JSON.stringify(caseID));
+    })
 
     return (
 

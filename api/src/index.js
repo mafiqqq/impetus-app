@@ -1,4 +1,4 @@
-import { typeDefs, resolvers } from "./graphql-schema";
+import { typeDefs, resolvers} from "./graphql-schema";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import { v1 as neo4j } from "neo4j-driver";
@@ -23,6 +23,15 @@ app.use(cors());
  * in generated queries and/or mutations. Read more in the docs:
  * https://grandstack.io/docs/neo4j-graphql-js-api.html#makeaugmentedschemaoptions-graphqlschema
  */
+
+
+//  const resolvers = {
+//     Claim(obj, args, context, info) {
+//       return filter()
+//     }
+//  }
+
+
 
 const schema = makeAugmentedSchema({
   typeDefs,
@@ -61,7 +70,7 @@ const driver = neo4j.driver(
 const server = new ApolloServer({
   context: { driver },
   schema: schema,
-  introspection: true,
+  // introspection: true,
   playground: true
 });
 

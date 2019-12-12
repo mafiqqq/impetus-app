@@ -20,7 +20,7 @@ class CaseList extends Component {
         });
     };
 
-    displayClaims() {
+    displayCases() {
         var data = this.props.data;
         console.log(this.props);
         // console.log(data.Case.map(cases =>{
@@ -45,7 +45,7 @@ class CaseList extends Component {
                                             comment: cases.comment,
                                             task: cases.task,
                                             dueDate: cases.dueDate,
-                                            caseStatus: cases.caseStatus,
+                                            caseStatus: caseStatus.caseStatus,
                                             claimID: cases.claims.map(x => x.claimID),
                                             status: cases.claims.map(x => x.status),
                                             reportedDate: cases.claims.map(x => x.reportedDate),
@@ -93,7 +93,7 @@ class CaseList extends Component {
                         <th>Due Date</th>
                         <th>Claim By</th>
                     </tr>
-                    {this.displayClaims()}
+                    {this.displayCases()}
 
                 </table>
                 {/* <ClaimDetails claimID={ this.state.selected }/> */}
