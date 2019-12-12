@@ -78,6 +78,10 @@ type Case {
    comment: String
    task: String
    caseStatus: String
+   caseStatusFilter: [Case]
+   @cypher(
+      statement: "MATCH (this) WHERE this.caseStatus='Open for Enquiry' RETURN distinct this"
+   )
    claims: [Claim] @relation(name: "CREATED_A", direction: "IN")
 }
 
@@ -122,13 +126,13 @@ type Claim {
    score: Int
    normalScore: [Claim]
    @cypher(
-      statement: "MATCH (this) WHERE this.score<=500 RETURN distinct this"
+      statement: "MATCH (this) WHERE this.score<=500 OR this.status='Fraud' RETURN distinct this"
    )
    reportedDate: String
    description: String
    alertScore: [Claim]
     @cypher(
-      statement: "MATCH (this) WHERE this.score>500  RETURN distinct this"
+      statement: "MATCH (this) WHERE this.score>500 AND this.status<>'Fraud' RETURN distinct this"
     )
    accidents: [Accident] @relation(name: "BASED_ON", direction:"OUT")
    persons: [Person] @relation(name: "MADE_A", direction: "IN")
@@ -173,8 +177,15 @@ type Lawfirm {
 
 type ClaimLog {
    claimLogID: String!
-   timeLog: LocalDateTime
+   timeLog: LocalDateTime!
    logStatus: String
+}
+
+type _Neo4jLocalDateTimeInput {
+  year: Int
+  month: Int
+  day: Int
+  formatted: String
 }
 
 type Lawyer_Of @relation(name: "LAWYER_OF"){

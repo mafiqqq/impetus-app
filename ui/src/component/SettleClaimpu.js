@@ -32,6 +32,24 @@ mutation UpdateClaim($claimID: String!, $status: String!){
 }
 `;
 
+const CREATE_CLAIMLOG_MUTATION = gql`
+mutation CreateClaimLog($claimLogID: String!, $timeLog: String!, $logStatus: String!){
+    CreateClaimLog(
+        claimLogID: $claimLogID,
+        timeLog:{
+            formatted: $timeLog
+        }, 
+        logStatus: $logStatus
+    ){
+        claimLogID
+        timeLog {
+            formatted
+        }
+        logStatus
+    }
+}
+`;
+
 
 const Settle = props => {
 
@@ -45,6 +63,13 @@ const Settle = props => {
     // };
 
     // console.log(props);
+    function getFormattedDate() {
+        var date = new Date();
+        var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "T" +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var res = str.toString();
+        return res;
+    }
+    console.log(getFormattedDate().toString());
     const [settleState, setSettleState] = useState(props)
     const [UpdateClaim, { loading }] = useMutation(UPDATE_CLAIM_MUTATION, {
         variables: {
@@ -52,6 +77,14 @@ const Settle = props => {
             status: "Settled"
         },
         refetchQueries: [{query: getClaimsQuery }]
+    })
+
+    const [CreateClaimLog, {loadingLog}] = useMutation(CREATE_CLAIMLOG_MUTATION, {
+        variables: {
+            claimLogID: settleState.claimID,
+            timeLog: getFormattedDate(),
+            logStatus: "Settled"
+        }
     })
 
     console.log("Hi", settleState)
@@ -122,7 +155,9 @@ const Settle = props => {
 
 
                         onClick={e => {
-                            UpdateClaim(); 
+                            UpdateClaim().then(() => {
+                                CreateClaimLog();
+                            }); 
                             close();
                         }}
 

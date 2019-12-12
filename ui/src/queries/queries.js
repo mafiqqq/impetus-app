@@ -97,7 +97,9 @@ const getCasesQuery = gql`
   	comment
     task
     dueDate
-    caseStatus
+    caseStatusFilter {
+      caseStatus
+    }
     claims{
       claimID
       reportedDate

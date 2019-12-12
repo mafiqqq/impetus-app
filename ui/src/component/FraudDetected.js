@@ -24,10 +24,33 @@ mutation UpdateClaim($claimID: String!, $status: String!){
 }
 `;
 
-
+const CREATE_CLAIMLOG_MUTATION = gql`
+mutation CreateClaimLog($claimLogID: String!, $timeLog: String!, $logStatus: String!){
+    CreateClaimLog(
+        claimLogID: $claimLogID,
+        timeLog:{
+            formatted: $timeLog
+        }, 
+        logStatus: $logStatus
+    ){
+        claimLogID
+        timeLog {
+            formatted
+        }
+        logStatus
+    }
+}
+`;
 
 
 const FraudDetected = props => {
+
+    function getFormattedDate() {
+        var date = new Date();
+        var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "T" +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var res = str.toString();
+        return res;
+    }
 
     const [fraudState, setFraudState] = useState(props)
     const [UpdateCase, { loadingCase }] = useMutation(UPDATE_CASE_MUTATION, {
@@ -43,6 +66,14 @@ const FraudDetected = props => {
             status: "Fraud"
         },
         refetchQueries: [{ query: getClaimsQuery }]
+    })
+
+    const [CreateClaimLog, {loadingLog}] = useMutation(CREATE_CLAIMLOG_MUTATION, {
+        variables: {
+            claimLogID: fraudState.claimID,
+            timeLog: getFormattedDate(),
+            logStatus: "Fraud"
+        }
     })
 
     useEffect(() => {
@@ -63,8 +94,11 @@ const FraudDetected = props => {
                     <div className="actions">
 
                         <button className="button-green" onClick={e => {
-                            UpdateCase();
-                            UpdateClaim();
+                            UpdateCase().then(()=>{
+                                UpdateClaim().then(() => {
+                                    CreateClaimLog();
+                                })
+                            })
                             close();
                         }}>Yes </button>
                         <button className="button-red" onClick={() => { close(); }}>Cancel </button>

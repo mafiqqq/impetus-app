@@ -29,10 +29,11 @@ class CaseList extends Component {
         // const claimD = this.setClaims(this.props.data);
         if (data.loading) {
             return (<div>Loading Cases...</div>);
-        } else {    
+        } else {
             return data.Case.map(cases => {
+                return (cases.caseStatusFilter.map(caseStatus => {
+                    console.log(cases.claims.map(x => x.persons.map(y => y.lastName)));
                     return (
-
                         <tr>
                             {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
                             <td >
@@ -49,36 +50,38 @@ class CaseList extends Component {
                                             status: cases.claims.map(x => x.status),
                                             reportedDate: cases.claims.map(x => x.reportedDate),
                                             value: cases.claims.map(x => x.value),
-                                            description: cases.claims.map(x=>x.description),
-                                            firstName: cases.claims.map(x => x.persons.map(y=> y.firstName)),
-                                            lastName: cases.claims.map(x => x.persons.map(y=> y.lastName)),
-                                            phoneNum: cases.claims.map(x => x.persons.map(y=> y.phoneNum)),
-                                            icNum: cases.claims.map(x => x.persons.map(y=> y.icNum)),
-                                            policeNum: cases.claims.map(x=>x.accidents.map(y=> y.policeNum))
+                                            description: cases.claims.map(x => x.description),
+                                            firstName: cases.claims.map(x => x.persons.map(y => y.firstName)),
+                                            lastName: cases.claims.map(x => x.persons.map(y => y.lastName)),
+                                            phoneNum: cases.claims.map(x => x.persons.map(y => y.phoneNum)),
+                                            icNum: cases.claims.map(x => x.persons.map(y => y.icNum)),
+                                            policeNum: cases.claims.map(x => x.accidents.map(y => y.policeNum))
                                         }
                                     }
                                 }>{cases.caseID}</Link>
                             </td>
                             <td>{cases.task}</td>
-                            <td>{cases.claims.map(x=> x.reportedDate)}</td>
+                            <td>{cases.claims.map(x => x.reportedDate)}</td>
                             <td>RM {cases.claims.map(x => x.value)}</td>
                             <td>{cases.dueDate}</td>
-                            <td>{cases.claims.map(x => x.persons.map(y=> y.firstName))  }</td>
+                            <td>{cases.claims.map(x => x.persons.map(y => y.firstName))}</td>
                         </tr>
                     )
-                            }
-                )
-                // const claimTo = {
-                //     pathname: `/OpenClaim/{claim.claimID}`
-                // }
-
+                }))
 
             }
+            )
+            // const claimTo = {
+            //     pathname: `/OpenClaim/{claim.claimID}`
+            // }
 
 
         }
 
-    render(){
+
+    }
+
+    render() {
         return (
             <div>
                 <table className='claims'>
@@ -91,7 +94,7 @@ class CaseList extends Component {
                         <th>Claim By</th>
                     </tr>
                     {this.displayClaims()}
-                    
+
                 </table>
                 {/* <ClaimDetails claimID={ this.state.selected }/> */}
             </div>

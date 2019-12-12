@@ -17,6 +17,8 @@ function OpenAlert() {
 
     const location = useLocation();
 
+    
+
     return (
         <div className="row">
             <div className="OpenedClaim">

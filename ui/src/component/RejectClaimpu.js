@@ -18,7 +18,32 @@ mutation UpdateClaim($claimID: String!, $status: String!){
 }
 `;
 
+const CREATE_CLAIMLOG_MUTATION = gql`
+mutation CreateClaimLog($claimLogID: String!, $timeLog: String!, $logStatus: String!){
+    CreateClaimLog(
+        claimLogID: $claimLogID,
+        timeLog:{
+            formatted: $timeLog
+        }, 
+        logStatus: $logStatus
+    ){
+        claimLogID
+        timeLog {
+            formatted
+        }
+        logStatus
+    }
+}
+`;
+
 const Reject = props => {
+
+    function getFormattedDate() {
+        var date = new Date();
+        var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "T" +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var res = str.toString();
+        return res;
+    }
 
     const [rejectState, setRejectState] = useState(props)
     const [UpdateClaim, { loading }] = useMutation(UPDATE_CLAIM_MUTATION, {
@@ -27,6 +52,14 @@ const Reject = props => {
             status: "Rejected"
         },
         refetchQueries: [{query: getClaimsQuery }]
+    })
+
+    const [CreateClaimLog, {loadingLog}] = useMutation(CREATE_CLAIMLOG_MUTATION, {
+        variables: {
+            claimLogID: rejectState.claimID,
+            timeLog: getFormattedDate(),
+            logStatus: "Rejected"
+        }
     })
 
     console.log("Hi", rejectState)
@@ -45,12 +78,14 @@ const Reject = props => {
                   <div className="header">
                   Alert </div>
                   <div className="reject">
-                      <p className="confirmation">Are you sure this claim is rejected?</p>
+                      <p className="confirmation">Are you sure this claim is REJECTED??</p>
           </div>
                   <div className="actions">
 
                       <button   className="button-green" onClick={e => {
-                            UpdateClaim(); 
+                            UpdateClaim().then(() =>{
+                                CreateClaimLog();
+                            }); 
                             close();
                         }}>Yes </button>
                       <button className="button-red" onClick={() => {close();}}>Cancel </button>
