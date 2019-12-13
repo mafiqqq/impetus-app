@@ -12,7 +12,9 @@ require("./search.css");
 const Search = props => {
 
     const [searchClaim, setSearchClaim] = useState("")
-   
+    const [searchPerson, setSearchPerson] = useState("")
+    const [searchVehicle, setSearchVehicle] = useState("")
+    const [searchAccident, setSearchAccident] = useState("")
 
 
     const handleSubmit = (evt) => {
@@ -34,18 +36,19 @@ const Search = props => {
                       className="details"
                       name="details"
                       id=""
+                      onChange={(e)=> setSearchPerson(e.target.value)}
                     />
-                    <Link to="/SearchResultsPerson">
+                    <Link to={
+                      {
+                        pathname: "/SearchResultsPerson",
+                        state: {
+                          icNum: searchPerson
+                        }
+                      }
+                    }>
                       <button className="search">Search</button>
                     </Link>
                     <br />
-                    <input
-                      type="radio"
-                      className="radio"
-                      name="person"
-                      id="Name"
-                    />
-                    <label htmlFor="Name"> Name</label>
                     <input
                       type="radio"
                       className="radio"
@@ -56,6 +59,14 @@ const Search = props => {
                       {" "}
                       Identification Number
                     </label>
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="person"
+                      id="Name"
+                    />
+                    <label htmlFor="Name"> Name</label>
+                    
                   </div>
                 </form>
               </div>
@@ -107,8 +118,16 @@ const Search = props => {
                       className="details"
                       name="details"
                       id=""
+                      onChange={(e)=>{setSearchVehicle(e.target.value)}}
                     />
-                    <Link to="/SearchResultsVehicle">
+                    <Link to={
+                      {
+                        pathname: "/SearchResultsVehicle",
+                        state: {
+                          plateNumber: searchVehicle
+                        }
+                      }
+                    }>
                       <button className="search">Search</button>
                     </Link>{" "}
                     <br />
@@ -133,7 +152,7 @@ const Search = props => {
                       name="vehicle"
                       id="vin"
                     />
-                    <label htmlFor="vin"> Vehicle Identification Number</label>
+                    <label htmlFor="vin">Chassis Number</label>
                   </div>
                 </form>
               </div>
@@ -145,8 +164,16 @@ const Search = props => {
                       className="details"
                       name="details"
                       id=""
+                      onChange={(e)=> {setSearchAccident(e.target.value)}}
                     />
-                    <Link to="/SearchResultsAccident">
+                    <Link to={
+                      {
+                        pathname: "/SearchResultsAccident",
+                        state: {
+                          policeNum: searchAccident
+                        }
+                      }
+                    }>
                       <button className="search">Search</button>
                     </Link>{" "}
                     <br />
