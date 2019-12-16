@@ -1,168 +1,325 @@
-import React, { Component } from "react";
-import { Sigma, RandomizeNodePositions, RelativeSize, NeoCypher } from "react-sigma";
+import React, { Component, useState } from "react";
+import { Sigma, NOverlap, EdgeShapes, RandomizeNodePositions, RelativeSize, NeoCypher, ForceAtlas2 } from "react-sigma";
 import SigmaLoader from "../Sigma/Loader";
+// import '../sigma/plugins.dragNodes';
+import DragNodes from "./DragNodes";        
+// import 'react-sigma/sigma/sigma.plugins.dragNodes'
 import NodeShapes from "../Sigma/NodeShapes";
+import { NodeGraphProducers } from "./NodeGraphProducers.js";
+import { canNotDefineSchemaWithinExtensionMessage } from "graphql/validation/rules/LoneSchemaDefinition";
+import NeoGraphItemsProducers from "react-sigma/lib/NeoGraphItemsProducers";
 
-class NodeGraph extends Component {
 
-    graphData;
-    constructor(props) {
-        super(props);
+const datas = {
 
-        this.state = {
-            filterNeighbours: "",
-            settings: {
-                batchEdgesDrawing: true,
-                drawEdges: true,
-                drawLabels: true,
-                drawEdgeLabels: true,
-                hideEdgesOnMove: false,
-                animationsTime: 3000,
-                clone: false,
-                doubleClickEnabled: true,
-                mouseWheelEnabled: true,
-                minNodeSize: 5,
-                maxNodeSize: 10,
-                minEdgeSize: 0.5,
-                maxEdgeSize: 1,
-                defaultNodeBorderColor: "#0000",
-                defaultHoverLabelBGColor: "transparent",
-                labelHoverColor: "transparent",
-                defaultLabelSize: 111
-            },
-            style: {
-                height: "100%",
-                width: "100%"
+    node(node: NeoNodes): SigmaNodes {
+        console.log(node)
+        if (node.labels == "Claim") {
+            return {
+                id: node.id,
+                label: node.properties.claimID,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#0256C3",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
             }
-        };
+        } else if (node.labels == "Accident") {
+            return {
+                id: node.id,
+                label: node.properties.accidentDate,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#008E39",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Person") {
+            return {
+                id: node.id,
+                label: node.properties.firstName,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#FBAF00",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Vehicle") {
+            return {
+                id: node.id,
+                label: node.properties.plateNumber,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#F8FF00",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Garage") {
+            return {
+                id: node.id,
+                label: node.properties.garageName,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#7A0082",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Healthcare") {
+            return {
+                id: node.id,
+                label: node.properties.healthcareName,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#00FFE6",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Lawfirm") {
+            return {
+                id: node.id,
+                label: node.properties.lawfirmName,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#8AFF00",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        } else if (node.labels == "Case") {
+            return {
+                id: node.id,
+                label: node.properties.caseID,
+                x: Math.random(),
+                y: Math.random(),
+                size: 10,
+                color: "#F895FE",
+                neo4j_label: node.labels,
+                neo4j_data: node.properties
+            }
+        }
+    },
 
-        this.graphData = {
-            nodes: [],
-            edges: []
-        };
 
-        // Generate a random graph:
-
-        this.graphData.nodes.push({
-            id: "user",
-            label: "Vasanth",
-            x: 5,
-            y: 8,
-            size: 9,
-            color: "#000000",
-            borderColor: "#FF3333",
-            type: "circle"
-        });
-
-        this.graphData.nodes.push({
-            id: "device1",
-            label: "Tablet",
-            x: 1,
-            y: 10,
-            size: 8,
-            color: "#000000",
-            borderColor: "#FF3333",
-            type: "circle"
-        });
-
-        this.graphData.nodes.push({
-            id: "device2",
-            label: "Ipad",
-            x: 10,
-            y: 10,
-            size: 8,
-            color: "#000000",
-            borderColor: "#FF3333",
-            type: "circle"
-        });
-
-        this.graphData.edges.push({
-            id: "userEdge",
-            source: "device2",
-            target: "user",
-            size: 3,
-            color: "#ff0000",
-            neighborsOf: "n" + ((Math.random() * 2) | 0),
-            nodesBy: "n" + ((Math.random() * 2) | 0),
-            type: "dotted"
-        });
-
-        this.graphData.edges.push({
-            id: "userEdge2",
-            source: "device1",
-            target: "user",
-            size: 3,
-            color: "#ff0000",
-            neighborsOf: "n" + ((Math.random() * 2) | 0),
-            nodesBy: "n" + ((Math.random() * 2) | 0),
-            type: "dotted"
-        });
-
+    edge(edge: edge): edges {
+        // console.log("Got from Neo4j edges");
+        // console.log(edge);
+        if (edge.type == 'BASED_ON') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "black",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'MADE_A') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "sandybrown",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'INVOLVED_IN') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "teal",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'REPAIRED_IN') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "black",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'HEALED_IN') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "black",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'LAWYER_OF') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "black",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'DRIVER_OF') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "magenta",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'PASSENGER_OF') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "firebrick",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'WITNESS_OF') {
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "mediumspringgreen",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        } else if (edge.type == 'CREATED_A'){
+            return {
+                id: edge.id,
+                label: edge.type,
+                source: edge.startNode,
+                target: edge.endNode,
+                color: "black",
+                neo4j_type: edge.type,
+                neo4j_data: edge.properties
+            }
+        }
     }
+};
+
+const NodeGraph = props => {
+
+    const [nodeGraphState, setNodeGraphState] = useState(props)
+    var claimID = nodeGraphState.claimID;
+    // var query3 = '"MATCH (c:Claim {claimID:"'+claimID+'"})-[r:BASED_ON]->(a:Accident) RETURN c,r,a })"' 
+    // MATCH (p:Person)-[:MADE_A]->(c:Claim {claimID:"6000"})-[:BASED_ON]->(a:Accident)<-[:INVOLVED_IN]-(v:Vehicle) RETURN p,c,a,v
+    var query = "MATCH (p:Person)-[s:MADE_A]->(c:Claim {claimID: "+ "'" + claimID +"'"+"})-[r:BASED_ON]->(a:Accident)<-[t:INVOLVED_IN]-(v:Vehicle) RETURN c,r,a,v,s,t"
+    // var queryS = query3.toString();
+    // console.log(query2)
+    // constructor(props) {
+    //     super(props);
+
+    //     this.state = {
+    //         filterNeighbours: "",
+    //         settings: {
+    //             batchEdgesDrawing: true,
+    //             drawEdges: true,
+    //             drawLabels: true,
+    //             drawEdgeLabels: true,
+    //             hideEdgesOnMove: false,
+    //             animationsTime: 200,
+    //             clone: false,
+    //             doubleClickEnabled: true,
+    //             mouseWheelEnabled: true,
+    //             minNodeSize: 5,
+    //             maxNodeSize: 10,
+    //             minEdgeSize: 0.5,
+    //             maxEdgeSize: 1,
+    //             defaultNodeBorderColor: "#0000",
+    //             defaultHoverLabelBGColor: "transparent",
+    //             labelHoverColor: "transparent",
+    //             defaultLabelSize: 15
+    //         },
+    //         style: {
+    //             height: "100%",
+    //             width: "100%"
+    //         }
+    //     };
+    // }
+
+    // componentDidMount(){
+    //     const s = this.props.sigma;
+    //     if (s) {
+    //         console.log(s, s.renderers, sigma.renderers);
+    //         const dragListener = new sigma.plugins.dragNodes(s, s.renderers[0])
+    //     }
+    // }
+
+    // componentWillUnmount(){
+    //     if (this.props.sigma) {
+    //         sigma.plugins.killDragNodes(this.props.sigma);
+    //     }
+    // }
 
 
-    render() {
-        // let myGraph = {
-        //     nodes: [{ id: "n1", label: "Alice" }, { id: "n2", label: "Rabbit" }],
-        //     edges: [{ id: "e1", source: "n1", target: "n2", label: "SEES" }]
-        // };
         return (
-
+        
             <div className="sigma-container" style={{ height: "100%", width: "100%" }}>
-                {/* <Sigma 
-            renderer="canvas" 
-            style={this.state.settings}
-            settings={this.state.style}
-            >
-            <SigmaLoader graph={this.graphData}>
-                <NodeShapes default="circle" />
-            </SigmaLoader>
-            </Sigma> */}
-
+                {/* {console.log(query2)}         */}
                 <Sigma
-                renderer="canvas" 
-                    settings={ this.state.style }
-                    // style={this.state.settings}
+                    renderer="svg"
+                    settings={
+                        {batchEdgesDrawing:true},
+                        {drawEdges:true},
+                        {drawLabels:false},
+                        {drawNodes: true},
+                        {drawEdgeLabels:true},
+                        {animationsTime: 100},
+                        {clone: false},
+                        {doubleClickEnabled: true},
+                        {mouseWheelEnabled: true},
+                        {minNodeSize: 5},
+                        {maxNodeSize: 10},
+                        {minEdgeSize: 3},
+                        {maxEdgeSize: 5},
+                        {labelHoverColor: "red"},
+                        {defaultLabelSize:15}
+                        
+                    }
+                    style={
+                        {width:"100%"},
+                        {height:"100%"}
+                    }
+                    onClickNode={() => console.log("Node clicked")}
                 >
+                    <EdgeShapes default="line"/>
+                    <NOverlap nodeMargin={5} gridSize={10} maxIterations={100}/>
                     <NeoCypher
                         url="http://localhost:7474"
                         user="neo4j"
                         password="root"
-                        query=
-                        "MATCH (c:Claim {claimID:'6000'})-[r]-(a) RETURN c,r,a"
+                        query={query}
+                        producers={datas}
                         onGraphLoaded={() => console.log("Graph loaded")} >
+                        <ForceAtlas2 worker barnesHutOptimize linLogMode
+                            barnesHutTheta={0.6}
+                            iterationsPerRender={10}
+                            timeout={3000} />
+                        
+                        <DragNodes />
                     </NeoCypher>
                     <RelativeSize initialSize={15} />
                     <RandomizeNodePositions />
                 </Sigma>
             </div>
-
-
-
-
-
-            // <Sigma graph={myGraph} settings={{drawEdges:true, clone:false}}>
-            //     <RelativeSize initialSize={15} />
-            //     <RandomizeNodePositions />
-            // </Sigma>
         )
-    }
 
 }
-
-// MyNeoGraphItemProducers {
-
-//     node(node: Accident) : Accident {
-//         return{
-//             id: 'accidentID',
-//             label: 'accidentID',
-//             x: Math.random(),
-//             y: Math.random(),
-//             size: 
-//             color: 
-//         }
-//     }
-    
-// }
 
 export default NodeGraph;

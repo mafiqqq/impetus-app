@@ -26,6 +26,8 @@ import SearchResultsVehicle from "./component/SearchResultsVehicle.js";
 import SearchResultsAccident from "./component/SearchResultsAccident.js";
 
 import NodeGraph from "./component/NodeGraph.js";
+// import GraphReact from "./component/GraphReact.js";
+// import GraphSigma from "./component/GraphSigma.js";
 // import AccidentMap from './component/AccidentMap.js';
 // import LocationView from './component/LocationView.js';
 
@@ -44,14 +46,15 @@ const client = new ApolloClient({
 
 class App extends Component {
   render() {
-    console.log("Hi");
     return (
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>
           <Router>
             <div className="App">
+              {/* <GraphReact /> */}
               {/* <NodeGraph /> */}
               {/* <LocationView /> */}
+              {/* <GraphSigma />/ */}
               <MainBase />
               <Switch>
                 <Route path="/" exact component={Home} />

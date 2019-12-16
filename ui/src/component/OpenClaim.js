@@ -65,7 +65,8 @@ function OpenClaim() {
                             </ClaimDetails>
                         </TabPanel>
                         <TabPanel>
-                            <NodeGraphExpand />
+                            <NodeGraphExpand 
+                            claimID={location.state.claimID}/>
                         </TabPanel>
                         <TabPanel>
                             <LocationView 
