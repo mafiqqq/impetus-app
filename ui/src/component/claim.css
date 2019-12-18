@@ -1,0 +1,26 @@
+.list {
+  width: 100%;
+  overflow-y: scroll;
+  height: 490px;
+}
+.claims {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 20px;
+}
+
+.claims td,
+.claims th {
+  min-width: 100px;
+  text-align: left;
+  padding: 5px 0 5px 30px;
+  border-bottom: 1px solid grey;
+}
+
+.score {
+  size: large;
+}
+
+button .fab-item {
+  background-color: none;
+}

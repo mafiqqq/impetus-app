@@ -1,0 +1,43 @@
+/* caseDetail   */
+
+.blank {
+  float: left;
+  width: 30px;
+}
+.row2 {
+  width: 1394px;
+  height: 400px;
+  padding: 0;
+}
+
+.caseDetails {
+  float: left;
+  width: 50%;
+  height: 100%;
+  padding: 50px;
+  border-right: 1px solid black;
+}
+.divider {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+.actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-red,
+.button-green {
+  width: 120px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.task {
+  position: center;
+  height: 100%;
+}
