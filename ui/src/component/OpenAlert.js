@@ -56,7 +56,8 @@ function OpenAlert() {
                         </AlertDetails>
                     </TabPanel>
                     <TabPanel>
-                        <NodeGraphExpand />
+                        <NodeGraphExpand
+                        claimID={location.state.claimID} />
                     </TabPanel>
                     <TabPanel>
                         <LocationView />

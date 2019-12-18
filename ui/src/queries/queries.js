@@ -120,6 +120,14 @@ const getCasesQuery = gql`
 }
 `
 
+//Get score claim
+const getScoreQuery = gql`
+query($id: String){
+    Claim(claimID: $id){
+        score
+    }
+}
+`;
 
 
 
@@ -269,7 +277,8 @@ export {
     getDynamicAccLocation,
     updateClaimMutation,
     getAlertsQuery,
-    getCasesQuery
+    getCasesQuery,
+    getScoreQuery
 
 };
 // getPlayersQuery, getClubsQuery, createPlayerMutation, getPlayerQuery,

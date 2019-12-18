@@ -15,7 +15,8 @@ class AlertDetails extends Component {
           <div className="network">
             <h2>Network</h2>
           </div>
-          <NodeGraph />
+          <NodeGraph 
+          claimID={this.props.claimID}/>
         </div>
 
         <div className="columnWhite">

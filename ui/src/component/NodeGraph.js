@@ -270,7 +270,7 @@ const NodeGraph = props => {
 
         return (
         
-            <div className="sigma-container" style={{ height: "100%", width: "100%" }}>
+            <div className="sigma-container" style={{ height: "420px", width: "100%" }}>
                 {/* {console.log(query2)}         */}
                 <Sigma
                     renderer="svg"
@@ -296,7 +296,7 @@ const NodeGraph = props => {
                         {width:"100%"},
                         {height:"100%"}
                     }
-                    onClickNode={() => console.log("Node clicked")}
+                    onClickNode={e => console.log(e.data.node.neo4j_data)}
                 >
                     <EdgeShapes default="line"/>
                     <NOverlap nodeMargin={5} gridSize={10} maxIterations={100}/>

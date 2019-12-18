@@ -33,11 +33,6 @@ class MainBase extends Component {
                   <p>CASES</p>
                 </li>
               </Link>
-              <Link to="/Search">
-                <li className="link">
-                  <p>SEARCH</p>
-                </li>
-              </Link>
             </div>
           </div>
         </div>

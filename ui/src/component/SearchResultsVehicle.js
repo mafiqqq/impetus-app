@@ -42,9 +42,13 @@ function SearchResultsVehicle() {
   }
 
   return (
-    <div className="searchBackground">
-      <div className="cont">
-        <h2 className="searchResultLabel">Search Results</h2>
+    <div className="searchBackground1">
+      <div className="cont1">
+        <h2 className="searchResultLabel">Search Results
+        <Link to="/">
+          <button className="backToSearch">Back</button>
+        </Link>
+        </h2>
         <div className="searchTable">
           <div>
             <table>
@@ -57,9 +61,6 @@ function SearchResultsVehicle() {
             </table>
           </div>
         </div>
-        <Link to="/Search">
-          <button className="backToSearch">Back</button>
-        </Link>
       </div>
     </div>
   );

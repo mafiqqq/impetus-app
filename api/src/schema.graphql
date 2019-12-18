@@ -154,7 +154,10 @@ type Garage {
    city: String
    state: String
    vehicles: [Repaired_In]
-
+  garageFraud : Int
+    @cypher(
+      statement: "MATCH (this)<-[:REPAIRED_IN]-(v:Vehicle)<-[:DRIVER_OF]-(p:Person)-[:MADE_A]->(c:Claim {status:'Fraud'}) RETURN count(c) as count"
+    )
 }
 
 type Healthcare {
@@ -165,6 +168,10 @@ type Healthcare {
    city: String
    state: String
    of_persons: [Healed_In]
+   healthcareFraud: Int
+   @cypher(
+     statement: "MATCH (this)<-[:HEALED_IN]-(p:Person)-[:MADE_A]->(c:Claim {status:'Fraud'}) return count(*)"
+   )
 
 }
 

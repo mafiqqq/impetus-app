@@ -213,13 +213,21 @@ const datas = {
 
 const NodeGraphExpand = props => {
 
+    const sigmaContainerStyle={
+        position: "none",
+        height: "450px", 
+        width: "1550px",
+        overflow:"scroll", 
+       
+      };
+
     const [nodeGraphExpandState, setNodeGraphExpandState] = useState(props)
     var claimID = nodeGraphExpandState.claimID;
     var query = "MATCH (c:Claim {claimID: "+ "'" + claimID +"'"+"})-[r]-(a)-[d]-(e)-[g]-(h) RETURN c,r,a,d,e,g,h"
     // "MATCH (c:Claim {claimID:'6000'})-[r]-(a)-[d]-(e)-[g]-(h) RETURN c,r,a,d,e,g,h"
         return (
 
-            <div className="sigma-container" style={{ height: "1000px", width: "1750px" }}>
+            <div className="sigma-container" style={sigmaContainerStyle}>
                 <Sigma
                 renderer="svg"
                 settings={

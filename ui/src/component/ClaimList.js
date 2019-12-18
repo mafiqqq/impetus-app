@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container, Button } from "react-floating-action-button";
 import { graphql } from "react-apollo";
-import { getClaimsQuery } from "../queries/queries.js";
+import { getClaimsQuery, getScoreQuery } from "../queries/queries.js";
 import "./claim.css";
+import CalculateScore from "./CalculateScore.js";
 
 //components
 // import ClaimDetails from "./ClaimDetails.js";
@@ -11,9 +12,11 @@ import "./claim.css";
 class ClaimList extends Component {
   constructor(props) {
     super(props);
+    // this.calculateClaimValue = this.calculateClaimValue.bind(this);
     this.state = {
       selected: null,
-      claims: ""
+      claims: "",
+      scoreCount: 0
     };
   }
 
@@ -22,6 +25,12 @@ class ClaimList extends Component {
       claims: object
     });
   };
+
+  setScoreCount = int => {
+    this.setState({
+      scoreCount: this.scoreCount + int
+    })
+  }
 
   displayClaims() {
     var data = this.props.data;
@@ -33,7 +42,7 @@ class ClaimList extends Component {
       return data.Claim.map(claim => {
         return claim.normalScore.map(normal => {
           return (
-            <tr>
+            <tr id="somerow">
               {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
               <td>
                 <Link
@@ -57,7 +66,7 @@ class ClaimList extends Component {
                 </Link>
               </td>
               <td>{claim.status}</td>
-              <td>{normal.score}</td>
+              <td id="scoretd">{normal.score}</td>
               <td>RM {claim.value}</td>
               <td>{claim.persons.map(x => x.firstName)}</td>
               <td>{claim.persons.map(x => x.lastName)}</td>
@@ -66,17 +75,46 @@ class ClaimList extends Component {
             </tr>
           );
         });
-        // const claimTo = {
-        //     pathname: `/OpenClaim/{claim.claimID}`
-        // }
       });
     }
+  }
+
+  displayScore= ()=> {
+    var table = document.getElementById("claimsTable");
+    for (var i=1, row; row=table.rows[i]; i++){
+    var s = document.getElementById("claimsTable").rows[i].cells.namedItem("scoretd").innerHTML;
+    if(s < 400){
+      var data = this.props.data;
+      if(data.loading){
+        console.log("Calculating..")
+      } else {
+        var scoreCount = 0;
+      const calculateClaimValue=()=>{
+        return data.Claim.map(claim =>{
+          var value = claim.value;
+          var calcValue =(value/100)*5;
+          this.setScoreCount(calcValue);
+        },
+      console.log(this.scoreCount))
+      }
+
+      console.log("Hi");
+      
+      
+    }
+
+
+    } 
+    }
+    this.calculateClaimValue();
+    // this.calculateClaimValue();    
+    // console.log(this.scoreCount)
   }
   render() {
     console.log(this.props);
     return (
       <div>
-        <table className="claims">
+        <table className="claims" id="claimsTable">
           <tr>
             <th>Claim ID</th>
             <th>Status</th>
@@ -94,7 +132,9 @@ class ClaimList extends Component {
         <Container>
           <Button
             tooltip="Calculate the score of claims"
-            onClick={() => alert("this is for calculate score")}
+            onClick={() =>{
+              this.displayScore()
+            } }
           >
             Calculate
           </Button>

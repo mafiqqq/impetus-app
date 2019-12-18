@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
+import "./searchResults.css";
+=======
 import "./mainBase.css";
+>>>>>>> 15e008fdd650d106f923d93f6f97bf73836c00a2
 import { useLocation } from 'react-router';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -46,12 +50,12 @@ function SearchResultsPerson() {
     }
   }
   return (
-    <div className="searchBackground">
-      <div className="cont">
+    <div className="searchBackground1">
+      <div className="cont1">
         <div className="resultdiv">
           <h2 className="searchResultLabel">
             Search Results{" "}
-            <Link to="/Search">
+            <Link to="/">
               <button className="backToSearch">Back</button>
             </Link>
           </h2>

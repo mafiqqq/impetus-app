@@ -24,7 +24,6 @@ const Search = props => {
     return (
       <div className="searchBackground">
         <div className="cont">
-          <h2 className="searchLabel">Search</h2>
           <div className="searchOption">
             <Tabs>
               <div label="Person">
@@ -54,6 +53,7 @@ const Search = props => {
                       className="radio"
                       name="person"
                       id="Identification"
+                      checked
                     />
                     <label htmlFor="Identification">
                       {" "}

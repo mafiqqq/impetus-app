@@ -44,12 +44,12 @@ function SearchResultsAccident() {
   }
 
   return (
-    <div className="searchBackground">
-      <div className="cont">
+    <div className="searchBackground1">
+      <div className="cont1">
         <div className="resultdiv">
           <h2 className="searchResultLabel">
             Search Results{" "}
-            <Link to="/Search">
+            <Link to="/">
               <button className="backToSearch">Back</button>
             </Link>
           </h2>

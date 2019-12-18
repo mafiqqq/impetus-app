@@ -42,6 +42,8 @@ class ClaimDetails extends Component {
           </div>
           <NodeGraph 
           claimID={this.props.claimID}/>
+         
+          
         </div>
 
         <div className="columnWhite">

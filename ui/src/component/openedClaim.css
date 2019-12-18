@@ -30,7 +30,7 @@
 .tab {
   float: left;
   width: 100%;
-  height: 450px;
+  height: 490px;
   overflow: hidden;
   background-color: white;
   margin: 5px 0 10px 0;
@@ -45,9 +45,18 @@
   width: 32.33%;
   margin: 0 5px 0 7px;
   padding: 0;
-  height: 400px;
+  height: 450px;
   background-color: rgb(236, 236, 236);
+  overflow-y: scroll;
+  overflow-x: hidden;
   /* border-radius: 20px; */
+}
+
+.graph{
+  width: 100%;
+  height: 450px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .claimDetail table {
   table-layout: auto;
@@ -56,6 +65,7 @@
 .columnWhite {
   background-color: white;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .columnWhite h6 {

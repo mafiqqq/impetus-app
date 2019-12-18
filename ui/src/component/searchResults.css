@@ -1,0 +1,77 @@
+.content {
+    display: flex;
+    width: 80%;
+    /* background-image: url("logo.jpg"); */
+    /* filter: blur(8px); */
+    background-color:white;
+   
+  }
+  
+.searchBackground1 {
+    /* height: 490px; */
+    width: 100%;
+    height: 75vh;
+    /* border: 1px solid black; */
+  }
+  
+  .cont1 {
+    float: center;
+    width: 80%;
+    height: 90%;
+    margin: 3% 10% 0;
+    padding: 0;
+    border: 1px solid  rgb(85,84,84);
+    border-radius: 5px;
+    overflow-y: scroll;
+  }
+
+  
+  /* search Results */
+  
+  .searchTable {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .searchTable table {
+      border: 1px solid rgb(234, 233, 233);
+      border-bottom: none;
+  }
+  
+  .searchTable td,
+  .searchTable th {
+    min-width: 200px;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px 0 5px 30px;
+    border-bottom: 1px solid rgb(234, 233, 233);
+  }
+  
+  .searchResultLabel {
+      font-size: large;
+    margin-bottom: 10px;
+    padding: 20px;
+    color: rgb(85,84,84);
+    
+  }
+  
+  .backToSearch {
+    text-decoration: underline;
+    -webkit-appearance: none;
+    margin: 4px;
+    border: 0;
+    font-family: Simplified Arabic;
+    font-size: 18px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    width: 100px;
+    float: right;
+  }
+  
+  .resultdiv {
+    background-color: white;
+    position: static;
+    margin-bottom: 30px;
+  }
+  
