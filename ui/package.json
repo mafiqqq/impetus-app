@@ -29,7 +29,10 @@
     "react-scripts": "^2.1.1",
     "react-sigma": "^1.2.33",
     "react-tabs": "^3.0.0",
+<<<<<<< HEAD
     "react-tiny-popover": "^4.0.0",
+=======
+>>>>>>> 15e008fdd650d106f923d93f6f97bf73836c00a2
     "react-vis-force": "^0.3.1",
     "reactjs-popup": "^1.5.0",
     "serve": "^10.1.1"

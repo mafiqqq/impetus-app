@@ -5,7 +5,6 @@ import 'react-sigma/sigma/sigma.plugins.dragNodes'
 type Props = {
     sigma?: sigma
 }
-
 class DragNodes extends Component {
 
     constructor(props: Props){
