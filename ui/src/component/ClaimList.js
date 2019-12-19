@@ -129,16 +129,7 @@ class ClaimList extends Component {
           {this.displayClaims()}
         </table>
         {/* <ClaimDetails claimID={ this.state.selected }/> */}
-        <Container>
-          <Button
-            tooltip="Calculate the score of claims"
-            onClick={() =>{
-              this.displayScore()
-            } }
-          >
-            Calculate
-          </Button>
-        </Container>
+        <CalculateScore />
       </div>
       // <div>
       //     <ul id="claim-list">
