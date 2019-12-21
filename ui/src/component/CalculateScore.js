@@ -80,7 +80,7 @@ const CalculateScore = props => {
         else {
             console.log(data);
             return data.Claim.map(claims => {
-                if (claims.claimID == "6001") {
+                if (claims.score == 0) {
                     var values, accidentTime, healthFraud, garageFraud = 0;
                     values = getClaimValueScore(claims.claimID, claims.value);
                     accidentTime = getAccidentTimeScore(claims.claimID, claims.accidents.map(x => x.accidentTime));

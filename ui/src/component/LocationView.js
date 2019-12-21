@@ -101,7 +101,7 @@ class LocationView extends Component {
                 <ReactMapGL {...this.state.viewport}
                     onViewportChange={(viewport => this.setState({ viewport }))}
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                    mapStyle="mapbox://styles/impetusfd/ck2vpayt604u41cmusvoacvhz"
+                    mapStyle="mapbox://styles/impetusfd/ck4d22kjj3ne51cqgukcgcy6c"
                 >
                     {this.loadAccidentMarkers()}
                     {/* {console.log(JSON.stringify(this.state.selectedAccident))} */}

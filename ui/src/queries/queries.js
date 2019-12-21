@@ -37,11 +37,9 @@ query($id: String){
 //get One Claim query
 const getClaimsQuery = gql`
 {
-Claim{
+Claim(filter: {OR: [{score_lte:500}, {status:"Fraud"}]}){
         claimID
-        normalScore{
-            score
-        }
+        score
         value
         status
         reportedDate
@@ -64,11 +62,9 @@ Claim{
 //get Alert Lisy query
 const getAlertsQuery = gql`
 {
-Claim{
+Claim(filter:{score_gt:500}){
         claimID
-        alertScore {
-            score
-        }
+        score
         value
         status
         reportedDate

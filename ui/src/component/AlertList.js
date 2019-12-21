@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { getAlertsQuery } from '../queries/queries.js';
 
-class AlertList extends Component{
+class AlertList extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class AlertList extends Component{
     }
 
     setClaims = object => {
-        this.setState({         
+        this.setState({
             claims: object
         });
     };
@@ -27,48 +27,43 @@ class AlertList extends Component{
             return (<div>Loading Alerts...</div>);
         } else {
             return data.Claim.map(claim => {
-                return (claim.alertScore.map(alert => {
-                    return (
-
-                        <tr>
-                            <td >
-                                <Link to={
-                                    {
-                                        pathname: "/OpenAlert",
-                                        state: {
-                                            claimID: claim.claimID,
-                                            reportedDate: claim.reportedDate,
-                                            icNum: claim.persons.map(x => x.icNum),
-                                            status: claim.status,
-                                               description: claim.description,
-                                            firstName: claim.persons.map(x => x.firstName),
-                                            lastName: claim.persons.map(x => x.lastName),
-                                            phoneNum: claim.persons.map(x => x.phoneNum),
-                                            value: claim.value,
-                                            policeNum: claim.accidents.map(x => x.policeNum) 
-                                        }
+                // return (claim.alertScore.map(alert => {
+                return (
+                    <tr>
+                        <td >
+                            <Link to={
+                                {
+                                    pathname: "/OpenAlert",
+                                    state: {
+                                        claimID: claim.claimID,
+                                        reportedDate: claim.reportedDate,
+                                        icNum: claim.persons.map(x => x.icNum),
+                                        status: claim.status,
+                                        description: claim.description,
+                                        firstName: claim.persons.map(x => x.firstName),
+                                        lastName: claim.persons.map(x => x.lastName),
+                                        phoneNum: claim.persons.map(x => x.phoneNum),
+                                        value: claim.value,
+                                        policeNum: claim.accidents.map(x => x.policeNum)
                                     }
-                                }>{claim.claimID}</Link>
-                            </td>
-                            <td>{alert.score}</td>
-                            <td>RM {claim.value}</td>
-                            <td>{claim.persons.map(x => x.firstName)}</td>
-                            <td>{claim.persons.map(x => x.lastName)}</td>
-                            <td>{claim.accidents.map(x => x.city)}</td>
-                            <td>{claim.reportedDate}</td>
-                            <td>{claim.accidents.map(x => x.accidentDate)}</td>
-                        </tr>
-                    )
-                }))  
-            })
-
-
+                                }
+                            }>{claim.claimID}</Link>
+                        </td>
+                        <td>{claim.score}</td>
+                        <td>RM {claim.value}</td>
+                        <td>{claim.persons.map(x => x.firstName)}</td>
+                        <td>{claim.persons.map(x => x.lastName)}</td>
+                        <td>{claim.accidents.map(x => x.city)}</td>
+                        <td>{claim.reportedDate}</td>
+                        <td>{claim.accidents.map(x => x.accidentDate)}</td>
+                    </tr>
+                );
+            });
         }
     }
-
-    render(){
-        return(
-            <div>
+render(){
+    return (
+        <div>
             <table className='claims'>
                 <tr>
                     <th>Claim ID</th>
@@ -83,8 +78,8 @@ class AlertList extends Component{
                 {this.displayClaims()}
             </table>
         </div>
-        )
-    }
+    )
+}
 
 }
 

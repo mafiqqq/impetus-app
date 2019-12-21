@@ -34,13 +34,13 @@ class ClaimList extends Component {
 
   displayClaims() {
     var data = this.props.data;
-    // console.log(this.props);
+    console.log(this.props);
     // const claimD = this.setClaims(this.props.data);
     if (data.loading) {
       return <div>Loading Claims...</div>;
     } else {
       return data.Claim.map(claim => {
-        return claim.normalScore.map(normal => {
+        // return claim.normalScore.map(normal => {
           return (
             <tr id="somerow">
               {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
@@ -66,7 +66,7 @@ class ClaimList extends Component {
                 </Link>
               </td>
               <td>{claim.status}</td>
-              <td id="scoretd">{normal.score}</td>
+              <td id="scoretd">{claim.score}</td>
               <td>RM {claim.value}</td>
               <td>{claim.persons.map(x => x.firstName)}</td>
               <td>{claim.persons.map(x => x.lastName)}</td>
@@ -74,7 +74,6 @@ class ClaimList extends Component {
               <td>{claim.reportedDate}</td>
             </tr>
           );
-        });
       });
     }
   }
