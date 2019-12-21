@@ -28,6 +28,8 @@ class Dropdown extends React.Component {
       }
     
       hideDropdownMenu(event) {
+        event.preventDefault();
+        
         if (!this.dropdownMenu.contains(event.target)){
         this.setState({ displayMenu: false }, () => {
           document.removeEventListener('click', this.hideDropdownMenu);

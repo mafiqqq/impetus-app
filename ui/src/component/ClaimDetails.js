@@ -27,6 +27,7 @@ class ClaimDetails extends Component {
   //         )
   //     }
   // }
+  
 
   render() {
     // console.log(this.props);
@@ -40,6 +41,7 @@ class ClaimDetails extends Component {
           <div className="network">
             <h2>Network</h2>
           </div>
+          
           <NodeGraph 
           claimID={this.props.claimID}/>
          

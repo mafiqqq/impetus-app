@@ -80,7 +80,7 @@ const FraudDetected = props => {
 
     }, [])
     return (
-        <Popup offsetx="0" trigger={<button className="button-red" >Fraud Detected</button>} modal>
+        <Popup offsetx="0" trigger={<button className="button" >Fraud Detected</button>} modal>
             {close => (
                 <div className="modal">
                     <a className="close" onClick={close}>
@@ -93,7 +93,7 @@ const FraudDetected = props => {
                     </div>
                     <div className="actions">
 
-                        <button className="button-green" onClick={e => {
+                        <button className="button" onClick={e => {
                             UpdateCase().then(()=>{
                                 UpdateClaim().then(() => {
                                     CreateClaimLog().then(() =>{

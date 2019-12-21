@@ -82,7 +82,7 @@ const ResolveCase = props => {
 
     }, [])
     return (
-        <Popup offsetx="0" trigger={<button className="button-green" >Resolve Case</button>} modal>
+        <Popup offsetx="0" trigger={<button className="button" >Resolve Case</button>} modal>
             {close => (
                 <div className="modal">
                     <a className="close" onClick={close}>
@@ -95,7 +95,7 @@ const ResolveCase = props => {
                     </div>
                     <div className="actions">
 
-                        <button className="button-green" onClick={e => { 
+                        <button className="button" onClick={e => { 
                             UpdateCase().then(() => {
                                 UpdateClaim().then(() => {
                                     CreateClaimLog();

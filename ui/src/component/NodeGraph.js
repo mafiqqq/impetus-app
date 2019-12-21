@@ -1,4 +1,6 @@
 import React, { Component, useState } from "react";
+import { Button, Popup} from 'semantic-ui-react'
+
 import { Sigma, NOverlap, EdgeShapes, RandomizeNodePositions, RelativeSize, NeoCypher, ForceAtlas2 } from "react-sigma";
 import SigmaLoader from "../Sigma/Loader";
 // import '../sigma/plugins.dragNodes';
@@ -214,7 +216,7 @@ const datas = {
 };
 
 const NodeGraph = props => {
-
+    const [nodeOpen,setNodeOpen] = useState("Click on a node to display its details")
     const [nodeGraphState, setNodeGraphState] = useState(props)
     var claimID = nodeGraphState.claimID;
     // var query3 = '"MATCH (c:Claim {claimID:"'+claimID+'"})-[r:BASED_ON]->(a:Accident) RETURN c,r,a })"' 
@@ -271,8 +273,12 @@ const NodeGraph = props => {
         return (
         
             <div className="sigma-container" style={{ height: "420px", width: "100%" }}>
-                {/* {console.log(query2)}         */}
-                <Sigma
+ 
+ <Popup open
+            basic
+            wide='very'
+       content={nodeOpen}
+ trigger={<Sigma
                     renderer="svg"
                     settings={
                         {batchEdgesDrawing:true},
@@ -296,9 +302,63 @@ const NodeGraph = props => {
                         {width:"100%"},
                         {height:"100%"}
                     }
-                    onClickNode={e => console.log(e.data.node.neo4j_data)}
+                    onClickNode={e => {
+                        console.log(e.data.node.neo4j_data);
+                        
+                        if (e.data.node.neo4j_label == "Vehicle"){
+                            var model = "Vehicle Model: "+e.data.node.neo4j_data.model
+                            var chasis = "Chasis Number: "+e.data.node.neo4j_data.vin
+                            var plateNumber = "Plate Number: "+e.data.node.neo4j_data.plateNumber
+    
+                            setNodeOpen(()=>(model+", "+chasis+", "+plateNumber))
+                            
+                            
+                        }
+                        if (e.data.node.neo4j_label == "Person"){
+                            var name= "Name: "+e.data.node.neo4j_data.firstName+" "+ e.data.node.neo4j_data.lastName
+                           var ic= "IC Number: "+e.data.node.neo4j_data.icNum
+                        setNodeOpen(()=>(name+", "+ic))               
+                        }
+                        if (e.data.node.neo4j_label == "Claim"){
+                            var claimID= "Claim Id: "+e.data.node.neo4j_data.claimID
+                           var value= "Value: "+e.data.node.neo4j_data.value
+                           var status= "Status: "+e.data.node.neo4j_data.status
+                           var score= "Score: RM"+e.data.node.neo4j_data.score    
+                           var reportedDate= "Reported Date: "+e.data.node.neo4j_data.reportedDate                           
+                           
+                        setNodeOpen(()=>(claimID+", "+value+", "+status+", "+score+", "+reportedDate))               
+
+                        }
+    
+                        if (e.data.node.neo4j_label == "Accident"){
+                            var date= "Accident Date: "+e.data.node.neo4j_data.accidentDate
+                            var time= "Time Date: "+e.data.node.neo4j_data.accidentTime                            
+                            var address= "Address: "+e.data.node.neo4j_data.city+" "+ e.data.node.neo4j_data.street
+                            
+                            setNodeOpen(()=>(date+", "+time+", "+address))               
+                        }
+                        if (e.data.node.neo4j_label == "Garage"){
+                            var name= "Garage Name: "+e.data.node.neo4j_data.garageName
+                            var address= " Address: "+e.data.node.neo4j_data.city+" "+ e.data.node.neo4j_data.street+ ", State: "+ e.data.node.neo4j_data.state
+    
+                            setNodeOpen(()=>(name+", "+address))               
+                        }
+                        if (e.data.node.neo4j_label == "Lawfirm"){
+                            var name= "Lawfirm Name: "+e.data.node.neo4j_data.lawfirmName
+                            var address= " Address: "+e.data.node.neo4j_data.city+" "+ e.data.node.neo4j_data.street+ ", State: "+ e.data.node.neo4j_data.state
+                            
+                            setNodeOpen(()=>(name+", "+address))               
+                        }
+                        if (e.data.node.neo4j_label == "Healthcare"){
+                            var name= "Healthcare Service Name: "+e.data.node.neo4j_data.lawfirmName
+                            var address= " Address: "+e.data.node.neo4j_data.city+" "+ e.data.node.neo4j_data.street+ ", State: "+ e.data.node.neo4j_data.state
+                            
+                            setNodeOpen(()=>(name+", "+address))               
+                        }
+                        // console.log(e.data.node);
+                        // setNodeOpen( () => e.data.node.neo4j_data)
+                    }}
                 >
-                    <EdgeShapes default="line"/>
                     <NOverlap nodeMargin={5} gridSize={10} maxIterations={100}/>
                     <NeoCypher
                         url="http://localhost:7474"
@@ -316,7 +376,10 @@ const NodeGraph = props => {
                     </NeoCypher>
                     <RelativeSize initialSize={15} />
                     <RandomizeNodePositions />
-                </Sigma>
+                </Sigma>} flowing hoverable>
+      </Popup>
+              
+      
             </div>
         )
 

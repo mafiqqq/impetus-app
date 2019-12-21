@@ -82,13 +82,13 @@ const Reject = props => {
           </div>
                   <div className="actions">
 
-                      <button   className="button-green" onClick={e => {
+                      <button   className="button" onClick={e => {
                             UpdateClaim().then(() =>{
                                 CreateClaimLog();
                             }); 
                             close();
                         }}>Yes </button>
-                      <button className="button-red" onClick={() => {close();}}>Cancel </button>
+                      <button className="button" onClick={() => {close();}}>Cancel </button>
                   </div>
               </div>
           )}

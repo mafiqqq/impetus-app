@@ -158,7 +158,7 @@ const CreateACase = props => {
 
                                 <div className="date">
                                     <h5>Duedate:</h5>
-                                    <input className="dueDate" type="date" name="dueDate" form="newCase" onChange={(e) => setDueDate(e.target.value)}></input>
+                                    <input className="dueDate" type="date" min="2016-01-01" name="dueDate" form="newCase" onChange={(e) => setDueDate(e.target.value)}></input>
                                 </div>
 
                             </div>
@@ -174,9 +174,9 @@ const CreateACase = props => {
 
 
                         <div className="actions">
-                            <button className="button-green" form="newCase" >Create A Case </button>
+                            <button className="button" form="newCase" >Create A Case </button>
 
-                            <button className="button-red" onClick={() => { close(); }}>Cancel </button>
+                            <button className="button" onClick={() => { close(); }}>Cancel </button>
                         </div>
                     </form>
                 </div>

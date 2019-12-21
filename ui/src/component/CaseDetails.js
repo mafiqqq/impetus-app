@@ -44,9 +44,9 @@ class CaseDetails extends Component {
                         caseID={this.props.caseID}
                         caseStatus={this.props.caseStatus}
                         claimID={this.props.claimID}/>
-                        {/* <button className="button-red">
+                        {/* <button className="button">
                             Fraud Detected</button>
-                        <button className="button-green">
+                        <button className="button">
                             Resolve Investigation</button> */}
                     </div>
                 </div>

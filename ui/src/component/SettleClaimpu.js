@@ -136,7 +136,7 @@ const Settle = props => {
                     </div>
                     <div className="actions">
 
-                        <button className="button-green"
+                        <button className="button"
                             // onClick={
                             //     () => { this.props.updateClaimMutation({
                             //         variables: {
@@ -163,7 +163,7 @@ const Settle = props => {
 
                         // onClick={() => { close(); }}
                         >Yes </button>
-                        <button className="button-red" onClick={() => { close(); }}>Cancel </button>
+                        <button className="button" onClick={() => { close(); }}>Cancel </button>
                     </div>
                 </div>
             )}
