@@ -245,11 +245,17 @@ const NodeGraphExpand = props => {
                     {mouseWheelEnabled: true},
                     {minNodeSize: 5},
                     {maxNodeSize: 10},
-                    {minEdgeSize: 3},
-                    {maxEdgeSize: 5},
+                    {minEdgeSize: 25},
+                    {maxEdgeSize: 50},
                     {labelHoverColor: "red"},
+<<<<<<< HEAD
                     {defaultLabelSize: 15}
 
+=======
+                    {defaultLabelSize:15},
+                    {defaultEdgeSize: 30}
+                    
+>>>>>>> 27d2ea7ec41427f08eb2bb5c9a3e2428c5ffebfc
                 }
                 style={
                 { width: "100%" },

@@ -114,7 +114,7 @@ type Person {
    claims: [Claim] @relation(name: "MADE_A", direction:"OUT")
    drivers: [Vehicle] @relation(name: "DRIVER_OF", direction:"OUT")
    passengers: [Vehicle] @relation(name: "PASSENGER_OF", direction:"OUT")
-   healtcares: [Healed_In]
+   healthcares: [Healed_In]
    lawyers: [Lawyer_Of]
 
 }
@@ -137,7 +137,7 @@ type Claim {
    accidents: [Accident] @relation(name: "BASED_ON", direction:"OUT")
    persons: [Person] @relation(name: "MADE_A", direction: "IN")
    cases: [Case] @relation(name: "CREATED_A", direction: "OUT")
-
+   scoreboards: [Scoreboard] @relation(name: "CALCULATE_FOR", direction: "IN")
 }
 
 input Filters {
@@ -154,7 +154,7 @@ type Garage {
    city: String
    state: String
    vehicles: [Repaired_In]
-  garageFraud : Int
+   garageFraud : Int
     @cypher(
       statement: "MATCH (this)<-[:REPAIRED_IN]-(v:Vehicle)<-[:DRIVER_OF]-(p:Person)-[:MADE_A]->(c:Claim {status:'Fraud'}) RETURN count(c) as count"
     )
@@ -173,6 +173,13 @@ type Healthcare {
      statement: "MATCH (this)<-[:HEALED_IN]-(p:Person)-[:MADE_A]->(c:Claim {status:'Fraud'}) return count(*)"
    )
 
+}
+
+type Scoreboard {
+   claimID: String!
+   rules: String
+   score: Int
+   claimsBoard: [Claim] @relation(name: "CALCULATE_FOR", direction:"OUT")
 }
 
 type Lawfirm {
