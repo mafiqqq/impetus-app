@@ -48,6 +48,7 @@ class CaseList extends Component {
                                             caseStatus: caseStatus.caseStatus,
                                             claimID: cases.claims.map(x => x.claimID),
                                             status: cases.claims.map(x => x.status),
+                                            score: cases.claims.map(x => x.score),
                                             reportedDate: cases.claims.map(x => x.reportedDate),
                                             value: cases.claims.map(x => x.value),
                                             description: cases.claims.map(x => x.description),

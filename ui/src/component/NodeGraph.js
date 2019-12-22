@@ -147,7 +147,7 @@ const datas = {
                 label: edge.type,
                 source: edge.startNode,
                 target: edge.endNode,
-                color: "black",
+                color: "darkkhaki",
                 neo4j_type: edge.type,
                 neo4j_data: edge.properties
             }
@@ -157,7 +157,7 @@ const datas = {
                 label: edge.type,
                 source: edge.startNode,
                 target: edge.endNode,
-                color: "black",
+                color: "indigo",
                 neo4j_type: edge.type,
                 neo4j_data: edge.properties
             }
@@ -167,7 +167,7 @@ const datas = {
                 label: edge.type,
                 source: edge.startNode,
                 target: edge.endNode,
-                color: "black",
+                color: "deepskyblue",
                 neo4j_type: edge.type,
                 neo4j_data: edge.properties
             }
@@ -207,7 +207,7 @@ const datas = {
                 label: edge.type,
                 source: edge.startNode,
                 target: edge.endNode,
-                color: "black",
+                color: "navy",
                 neo4j_type: edge.type,
                 neo4j_data: edge.properties
             }

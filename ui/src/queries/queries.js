@@ -34,6 +34,16 @@ query($id: String){
 }
 `
 
+const getScoreboardQuery = gql`
+query($id: String){
+  Scoreboard(claimID: $id){
+    claimID
+    rules
+    score
+  }
+}
+`;
+
 //get One Claim query
 const getClaimsQuery = gql`
 {
@@ -62,7 +72,7 @@ Claim(filter: {OR: [{score_lte:500}, {status:"Fraud"}]}){
 //get Alert Lisy query
 const getAlertsQuery = gql`
 {
-Claim(filter:{score_gt:500}){
+Claim(filter:{AND: [{score_gt:500}, {status_not:"Fraud"}]}){
         claimID
         score
         value
@@ -101,6 +111,7 @@ const getCasesQuery = gql`
       reportedDate
       value
       description
+      score
       status
       accidents{
         policeNum
@@ -274,7 +285,8 @@ export {
     updateClaimMutation,
     getAlertsQuery,
     getCasesQuery,
-    getScoreQuery
+    getScoreQuery,
+    getScoreboardQuery
 
 };
 // getPlayersQuery, getClubsQuery, createPlayerMutation, getPlayerQuery,

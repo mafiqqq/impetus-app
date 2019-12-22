@@ -39,6 +39,7 @@ class AlertList extends Component {
                                         reportedDate: claim.reportedDate,
                                         icNum: claim.persons.map(x => x.icNum),
                                         status: claim.status,
+                                        score: claim.score,
                                         description: claim.description,
                                         firstName: claim.persons.map(x => x.firstName),
                                         lastName: claim.persons.map(x => x.lastName),

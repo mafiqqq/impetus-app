@@ -55,6 +55,7 @@ function OpenClaim() {
                             reportedDate={location.state.reportedDate}
                             icNum={location.state.icNum}
                             status={location.state.status}
+                            score={location.state.score}
                             description={location.state.description}
                             firstName={location.state.firstName}
                             lastName={location.state.lastName}
