@@ -116,6 +116,10 @@ type Person {
    passengers: [Vehicle] @relation(name: "PASSENGER_OF", direction:"OUT")
    healthcares: [Healed_In]
    lawyers: [Lawyer_Of]
+   personFraud: Int
+   @cypher(
+      statement: "MATCH (this)-[d]-(v:Vehicle)-[b]->(a:Accident)<-[:BASED_ON]-(c:Claim {status:'Fraud'}) RETURN count(c) as count"
+   )
 
 }
 
@@ -190,6 +194,10 @@ type Lawfirm {
    city: String
    state: String
    of_persons: [Lawyer_Of]
+   lawfirmFraud: Int
+   @cypher(
+      statement: "MATCH (this)-[:LAWYER_OF]->(p:Person)-[:MADE_A]->(c:Claim) WHERE c.status='Fraud' RETURN count(*)"
+   )
 
 }
 

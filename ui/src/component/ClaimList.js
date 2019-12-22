@@ -34,7 +34,7 @@ class ClaimList extends Component {
 
   displayClaims() {
     var data = this.props.data;
-    console.log(this.props);
+    // console.log(this.props);
     // const claimD = this.setClaims(this.props.data);
     if (data.loading) {
       return <div>Loading Claims...</div>;
@@ -53,6 +53,7 @@ class ClaimList extends Component {
                       reportedDate: claim.reportedDate,
                       icNum: claim.persons.map(x => x.icNum),
                       status: claim.status,
+                      score: claim.score,
                       description: claim.description,
                       firstName: claim.persons.map(x => x.firstName),
                       lastName: claim.persons.map(x => x.lastName),

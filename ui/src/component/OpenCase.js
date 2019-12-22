@@ -19,6 +19,7 @@ function OpenCase() {
 
     const location = useLocation();
     console.log(location.state);
+    console.log("Claim Yooo "+location.state.claimID)
     return (
         <div className="row">
             <div className="OpenedClaim">
@@ -53,22 +54,26 @@ function OpenCase() {
                     </TabPanel>
                     <TabPanel>
                         <AlertDetails 
-                        claimID={location.state.claimID}
+                        claimID={String(location.state.claimID)}
                         reportedDate={location.state.reportedDate}
-                        icNum={location.state.icNum}
-                        status={location.state.status}
-                        description={location.state.description}
-                        firstName={location.state.firstName}
-                        lastName={location.state.lastName}
-                        phoneNum={location.state.phoneNum}
-                        value={location.state.value}
-                        policeNum={location.state.policeNum}/>
+                        icNum={String(location.state.icNum)}
+                        status={String(location.state.status)}
+                        score={location.state.score}
+                        description={String(location.state.description)}
+                        firstName={String(location.state.firstName)}
+                        lastName={String(location.state.lastName)}
+                        phoneNum={String(location.state.phoneNum)}
+                        value={String(location.state.value)}
+                        policeNum={String(location.state.policeNum)}/>
                     </TabPanel>
                     <TabPanel>
-                        <NodeGraphExpand />
+                        <div className="graph">
+                        <NodeGraphExpand 
+                        claimID={String(location.state.claimID)}/></div>
                     </TabPanel>
                     <TabPanel>
-                        <LocationView />
+                        <LocationView 
+                        claimID={String(location.state.claimID)}/>
                     </TabPanel>
                 </Tabs>
             </span>

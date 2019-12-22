@@ -63,6 +63,7 @@ class LocationView extends Component {
     loadAccidentMarkers = () => {
 
         var data = this.props.data;
+        console.log(data);
         if (data.loading) {
             return (<div>Loading Accidents location...</div>)
         } else {

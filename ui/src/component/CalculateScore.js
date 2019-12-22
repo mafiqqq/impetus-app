@@ -14,11 +14,17 @@ query Claim {
       accidentTime
     }
     persons{
+      personFraud  
       healthcares{
         Healthcare{
           healthcareFraud
           healthcareID
         }
+      }
+      lawyers{
+          Lawfirm{
+              lawfirmFraud
+          }
       }
       drivers{
         garage{
@@ -78,36 +84,48 @@ const CalculateScore = props => {
     const totalScore = () => {
         if (loading) return <p>Calculating score...</p>
         else {
-            console.log(data);
+            // console.log(data);
             return data.Claim.map(claims => {
-                if (claims.score == 0) {
-                    var values, accidentTime, healthFraud, garageFraud = 0;
-                    values = getClaimValueScore(claims.claimID, claims.value);
-                    accidentTime = getAccidentTimeScore(claims.claimID, claims.accidents.map(x => x.accidentTime));
-                    var healthStatus = claims.persons.map(y => y.healthcares.map(z => z.Healthcare.healthcareFraud));
-                    var garageStatus = claims.persons.map(x => x.drivers.map(y => y.garage.map(z => z.Garage.garageFraud)));
-                    if (healthStatus != null) {
-                        healthFraud = getHealthcareFraud(claims.claimID, healthStatus);
-                    } else if (garageStatus != null) {
-                        garageFraud = getGarageFraud(claims.claimID, garageStatus);
-                    }
-                    var total = values + accidentTime + healthFraud + garageFraud;
-                    console.log("Values " + values);
-                    console.log("Accident time " + accidentTime);
-                    console.log("healthfraud " + healthFraud);
-                    console.log("garageFraud " + garageFraud);
-                    console.log("Total is " + total);
-                    updateScoreValue(claims.claimID, total);
+                // if (claims.score  0) {
+                var values, accidentTime, healthFraud, garageFraud, lawfirmFraud, personFraud = 0;
+                values = getClaimValueScore(claims.claimID, claims.value);
+                accidentTime = getAccidentTimeScore(claims.claimID, claims.accidents.map(x => x.accidentTime));
+                var healthStatus = claims.persons.map(y => y.healthcares.map(z => z.Healthcare.healthcareFraud));
+                var garageStatus = claims.persons.map(x => x.drivers.map(y => y.garage.map(z => z.Garage.garageFraud)));
+                var lawfirmStatus = claims.persons.map(x => x.lawyers.map(y => y.Lawfirm.lawfirmFraud));
+                var personStatus = claims.persons.map(x => x.personFraud);
+                if (healthStatus != null) {
+                    healthFraud = getHealthcareFraud(claims.claimID, healthStatus);
                 }
+                if (garageStatus != null) {
+                    garageFraud = getGarageFraud(claims.claimID, garageStatus);
+                }
+                if (lawfirmStatus != null) {
+                    lawfirmFraud = getLawfirmFraud(claims.claimID, lawfirmStatus);
+                }
+                if (personStatus != null) {
+                    personFraud = getPersonFraud(claims.claimID, personStatus);
+                }
+                var total = values + accidentTime + healthFraud + garageFraud + lawfirmFraud + personFraud;
+                // console.log("Values " + values);
+                // console.log("Accident time " + accidentTime);
+                // console.log("healthfraud " + healthFraud);
+                // console.log("garageFraud " + garageFraud);
+                // console.log("lawfirmFraud " + lawfirmFraud);
+                // console.log("personFraud " + personFraud);
+                // console.log("Total is " + total);
+                updateScoreValue(claims.claimID, total);
+                // }
             })
         }
     }
 
     function getClaimValueScore(claimID, value) {
-        var scoreOfValue = (value / 100) * 2;
-        var rulesOfValue = "The value of Claims";
+        var scoreOfValueFloat = (value / 100) * 2;
+        var scoreOfValue = Math.trunc(scoreOfValueFloat);
+        var rulesOfValue = "The value of Claims " + value;
 
-        // console.log("2 function"+claimID);
+        // console.log("Score value INT "+scoreOfValue);
         CreateScoreboard({
             variables: {
                 claimID: claimID,
@@ -127,7 +145,7 @@ const CalculateScore = props => {
         if (21 < intTime < 5) {
             var scoreOfAccidentTime = 40;
             var rulesOfAccidentTime = "The accident took place during late night between 22:00 hours and 04:00 hours"
-            console.log(scoreOfAccidentTime);
+            // console.log("Scorezz "+scoreOfAccidentTime);
             CreateScoreboard({
                 variables: {
                     claimID: claimID,
@@ -141,10 +159,10 @@ const CalculateScore = props => {
     }
 
     function getHealthcareFraud(claimID, healthcareFraud) {
-        console.log("Claim ID Health " + claimID);
-        console.log("Healthcre Fraud " + healthcareFraud);
+        // console.log("Claim ID Health " + claimID);
+        // console.log("Healthcre Fraud " + healthcareFraud);
         var scoreOfHealthcareFraud = healthcareFraud * 100;
-        var rulesOfHealthcareFraud = "The Healthcare has been identified involved in other " + healthcareFraud + " Fraudulent claims"
+        var rulesOfHealthcareFraud = "The Healthcare has been involved in other " + healthcareFraud + " Fraudulent Claims"
         CreateScoreboard({
             variables: {
                 claimID: claimID,
@@ -157,9 +175,9 @@ const CalculateScore = props => {
     }
 
     function getGarageFraud(claimID, garageFraud) {
-        console.log("Garage Fraud" + garageFraud);
+        // console.log("Garage Fraud" + garageFraud);
         var scoreOfGarageFraud = garageFraud * 100;
-        var rulesOfGarageFraud = "The Garage has been identified involved in other " + garageFraud + " Fraudulent claims"
+        var rulesOfGarageFraud = "The Garage has been involved in other " + garageFraud + " Fraudulent Claims"
         CreateScoreboard({
             variables: {
                 claimID: claimID,
@@ -167,48 +185,76 @@ const CalculateScore = props => {
                 score: scoreOfGarageFraud
             }
         });
+
         return parseInt(scoreOfGarageFraud);
     }
 
-// function getLawfirmFraud(claimID, lawfirmFraud) {
-//     return 8;
-// }
+    function getPersonFraud(claimID, personFraud) {
+        // console.log("Person fraud " + personFraud);
+        var scoreOfPersonFraud = personFraud * 250;
+        var rulesOfPersonFraud = "The Person has been involved in other " + personFraud + " Fraudulent Claims";
+        CreateScoreboard({
+            variables: {
+                claimID: claimID,
+                rules: rulesOfPersonFraud,
+                score: scoreOfPersonFraud
+            }
+        });
 
-function updateScoreValue(claimID, total) {
-    UpdateClaim({
-        variables: {
-            claimID: claimID,
-            score: total
-        },
-        refetchQueries: [{ query: getClaimsQuery }]
-    })
-}
+        return parseInt(scoreOfPersonFraud);
+    }
+
+    function getLawfirmFraud(claimID, lawfirmFraud) {
+        // console.log("Lawfirm Fraud " + lawfirmFraud);
+        var scoreOfLawfirmFraud = lawfirmFraud * 100;
+        var rulesOfLawfirmFraud = "The Lawfirm has been involved in other " + lawfirmFraud + " Fraudulent Claims";
+        CreateScoreboard({
+            variables: {
+                claimID: claimID,
+                rules: rulesOfLawfirmFraud,
+                score: scoreOfLawfirmFraud
+            }
+        });
+
+        return parseInt(scoreOfLawfirmFraud);
+    }
+
+    // function getLawfirmFraud(claimID, lawfirmFraud) {
+    //     return 8;
+    // }
+
+    function updateScoreValue(claimID, total) {
+        UpdateClaim({
+            variables: {
+                claimID: claimID,
+                score: total
+            },
+            refetchQueries: [{ query: getClaimsQuery }]
+        })
+    }
 
 
-useEffect(() => {
-    console.log("Updated score" + scoreValue, scoreValue);
-}, [scoreValue]);
+    useEffect(() => {
+        // console.log("Updated score" + scoreValue, scoreValue);
+    }, [scoreValue]);
 
-useEffect(() => {
-    console.log("Claim Board useEffect" + claimBoardID, claimBoardID);
-    // setClaimBoardID()
-}, [claimBoardID]);
+    useEffect(() => {
+        // console.log("Claim Board useEffect" + claimBoardID, claimBoardID);
+        // setClaimBoardID()
+    }, [claimBoardID]);
 
-return (
-    <Container>
-        <Button
-            tooltip="Calculate the score of claims"
-            onClick={() => {
-                
-                // console.log(data);
-                totalScore();
-                // getClaimValueScore("6000");
-            }}
-        >
-            Calculate
+    return (
+        <Container>
+            <Button
+                tooltip="Calculate the score of claims"
+                onClick={() => {
+                    totalScore();
+                }}
+            >
+                Calculate
           </Button>
-    </Container>
-)
+        </Container>
+    )
 
 }
 
