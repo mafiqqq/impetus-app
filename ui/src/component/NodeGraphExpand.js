@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { Button, Popup } from 'semantic-ui-react'
 import { Sigma, NOverlap, EdgeShapes, RandomizeNodePositions, RelativeSize, NeoCypher, ForceAtlas2 } from "react-sigma";
 import SigmaLoader from "../Sigma/Loader";
+import feat1 from "./legend.png";
 // import '../sigma/plugins.dragNodes';
 import DragNodes from "./DragNodes";
 // import 'react-sigma/sigma/sigma.plugins.dragNodes'
@@ -216,11 +217,19 @@ const datas = {
 const NodeGraphExpand = props => {
 
     const sigmaContainerStyle = {
-        position: relative,
         height: "450px",
         width: "1550px",
 
+
     };
+    const legend = {
+        width: '250px',
+        height: '200px',
+        position: 'absolute',
+        margin: '60px 0 0 1100px',
+        backgroundColor: 'white',
+        display: 'right'
+      }
 
     const [nodeOpen, setNodeOpen] = useState("Click on a node to display its details")
     const [nodeGraphExpandState, setNodeGraphExpandState] = useState(props)
@@ -230,8 +239,11 @@ const NodeGraphExpand = props => {
     return (
 
         <div className="sigma-container" style={sigmaContainerStyle}>
+        
+        
             <Popup open basic wide='very' content={nodeOpen}
-                trigger={<Sigma
+                trigger={ <div style={sigmaContainerStyle} ><img className='legend' src={feat1} style={legend} alt="hi"/>
+                <Sigma
                     renderer="svg"
                     settings={
                         { batchEdgesDrawing: true },
@@ -248,14 +260,9 @@ const NodeGraphExpand = props => {
                     {minEdgeSize: 25},
                     {maxEdgeSize: 50},
                     {labelHoverColor: "red"},
-<<<<<<< HEAD
-                    {defaultLabelSize: 15}
-
-=======
                     {defaultLabelSize:15},
                     {defaultEdgeSize: 30}
                     
->>>>>>> 27d2ea7ec41427f08eb2bb5c9a3e2428c5ffebfc
                 }
                 style={
                 { width: "100%" },
@@ -335,7 +342,7 @@ const NodeGraphExpand = props => {
             </NeoCypher>
             <RelativeSize initialSize={35} />
             <RandomizeNodePositions />
-            </Sigma>} >
+            </Sigma></div>} >
       </Popup >
             </div >
 
