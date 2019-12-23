@@ -9,6 +9,8 @@
 
 .scoreCardRed {
   background-color: rgb(245, 16, 0);
+  position: absolute;
+  width: 31.7%;
 }
 
 .scoreCardRed h2 {

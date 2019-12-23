@@ -108,12 +108,21 @@
   background-color: rgb(0, 155, 31);
 }
 
+.scoreCard[data-status="Fraud"]:after {
+width:350px;
+background-color: rgb(245, 16, 0);
+  
+}
+
+
 .tablescore {
   margin: 10px;
 }
 .tablescore th {
   width: 100%;
   text-align: left;
+  padding: 20px 25px 10px 8px;
+  
 }
 
 .claimDetail {

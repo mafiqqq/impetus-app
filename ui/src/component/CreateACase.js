@@ -132,7 +132,7 @@ const CreateACase = props => {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("caseID", JSON.stringify(caseID));
+        localStorage.setItem("caseID", JSON.stringify(9000));
     })
 
     return (

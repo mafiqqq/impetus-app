@@ -66,7 +66,7 @@ class ClaimList extends Component {
                   {claim.claimID}
                 </Link>
               </td>
-              <td>{claim.status}</td>
+              <td data-status={claim.status} className="claimStatus"></td>
               <td id="scoretd">{claim.score}</td>
               <td>RM {claim.value}</td>
               <td>{claim.persons.map(x => x.firstName)}</td>

@@ -45,3 +45,30 @@ button .fab-item {
   border-radius: 20px;  
   background: white;  
 }
+
+.claimStatus[data-status="Fraud"]:after {
+  content: "Fraud";
+  color : red;
+  font-weight: bold;
+ }
+ 
+ .claimStatus[data-status="Open"]:after {
+  content: "Open";
+  color : blue;
+  font-weight: bold;
+  
+ }
+ 
+ .claimStatus[data-status="Settled"]:after {
+  content: "Settled";  
+  color : green;
+  font-weight: bold;  
+ }
+ .claimStatus[data-status="Rejected"]:after {
+  content: "Rejected";  
+  color : red;
+  font-weight: bold;  
+ }
+
+
+

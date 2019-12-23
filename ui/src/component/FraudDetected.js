@@ -103,7 +103,7 @@ const FraudDetected = props => {
                             })
                             close();
                         }}>Yes </button>
-                        <button className="button-red" onClick={() => { close(); }}>Cancel </button>
+                        <button className="button" onClick={() => { close(); }}>Cancel </button>
                     </div>
                 </div>
             )}

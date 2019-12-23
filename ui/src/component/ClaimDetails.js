@@ -6,13 +6,6 @@ import gql from 'graphql-tag';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 
 
-  //     } else {
-  //         return (
-  //             <div>No Claim Selected...</div>
-  //         )
-  //     }
-  // }
-  
 const GET_SCOREBOARD_QUERY = gql`
 query Scoreboard($claimID: String!) {
   Scoreboard(claimID: $claimID){
@@ -25,17 +18,6 @@ query Scoreboard($claimID: String!) {
 
 const ClaimDetails = props => {
 
-      <div className="row">
-        <div className="column">
-          <div className="network">
-            <h2>Network</h2>
-          </div>
-          
-          <NodeGraph 
-          claimID={this.props.claimID}/>
-         
-          
-        </div>
   const [detailsState, setDetailsState] = useState(props);
   const { loading, data, error } = useQuery(GET_SCOREBOARD_QUERY, {
     variables: {
@@ -46,13 +28,14 @@ const ClaimDetails = props => {
 
   const displayScoreboard = () => {
     console.log(data);
-    if (loading) return <p>Loading scoreboard ...</p>
+    if (loading)
+      return <p>Loading scoreboard ...</p>
     else {
       return data.Scoreboard.map(claim => {
         return (
           <tr>
-            <th>
-              <p>{claim.rules}</p>
+            <th >
+              <p >{claim.rules}</p>
             </th>
             <td>
               {claim.score}
@@ -61,8 +44,27 @@ const ClaimDetails = props => {
         )
       })
     }
+
   };
 
+  const statusColor = () => {
+    if (detailsState.status == "Fraud" ||detailsState.status =="Rejected"){
+      return (
+        <div className="scoreCardRed"  >
+          <h2>Score Card</h2>
+          <h2>{detailsState.score}</h2>
+        </div>)
+    }
+    else {
+      return (
+        <div className="scoreCard" >
+          <h2>Score Card</h2>
+          <h2>{detailsState.score}</h2>
+        </div>
+      )
+    }
+  };
+  
   return (
     // <div id="claim-details">
     //     {this.displayClaimDetails()}
@@ -139,10 +141,7 @@ const ClaimDetails = props => {
       </div>
 
       <div className="column">
-        <div className="scoreCard">
-          <h2>Score Card</h2>
-          <h2>{detailsState.score}</h2>
-        </div>
+        {statusColor()}
         <div className="tablescore">
           <table>
             {displayScoreboard()}

@@ -14,7 +14,7 @@
   padding: 0;
   border-radius: 0 0 20px 20px;
   /* border: 1px solid grey; */
-  background-color: rgb(238,238,238);
+  background-color: white;
   
 }
 .searchLabel {
@@ -22,7 +22,7 @@
   margin-bottom: 10px;
   margin: 50px 0 50px 50px;
   padding-top: 10px;
-  color: rgb(85,84,84);
+  color: white;
 }
 
 .searchOption {
@@ -67,7 +67,7 @@
 }
 .details {
   -webkit-appearance: none;
-  background-color: rgb(238,238,238);
+  background-color: white;
   
   margin: 10px 20px 0 10px;
   border: 0;
@@ -93,5 +93,5 @@ label {
   font-size: medium;
 }
 .tab-list-active {
-background-color: rgb(238,238,238);
+background-color: white;
 }
