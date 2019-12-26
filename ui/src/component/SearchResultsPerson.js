@@ -12,8 +12,8 @@ function SearchResultsPerson() {
 
   const PERSONS_SEARCH_QUERY = gql`
   query Person($filter: String!) {
-    Person(filter: {icNum:$filter}){
-    icNum
+    Person(filter: {email:$filter}){
+    email
     firstName
     lastName
     claims{
@@ -36,7 +36,7 @@ function SearchResultsPerson() {
       return data.Person.map(person => {
         return (
           <tr>
-            <td>{person.icNum}</td>
+            <td>{person.email}</td>
             <td>{person.firstName + " " + person.lastName}</td>
             <td>{person.claims.map(x=> x.claimID)}</td>
             <td>{person.claims.map(x=> x.status)}</td>
@@ -60,7 +60,7 @@ function SearchResultsPerson() {
           <div>
             <table>
               <tr>
-                <th>IC Number</th>
+                <th>Email</th>
                 <th>Name</th>
                 <th>Claim Id</th>
                 <th>Status</th>

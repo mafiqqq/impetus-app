@@ -35,8 +35,8 @@ function SearchResultsAccident() {
           <tr>
             <td>{accident.policeNum}</td>
             <td>{accident.accidentDate}</td>
-            <td>{accident.claims.map(x=>x.claimID)}</td>
-            <td>{accident.claims.map(x=>x.status)}</td>
+            <td>{accident.claims.map(x=>x.claimID + ", ")}</td>
+            <td>{accident.claims.map(x=>x.status + ",")}</td>
           </tr>
         )
       })

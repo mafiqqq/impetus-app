@@ -68,7 +68,7 @@ const Search = props => {
                     className="details"
                     name="details"
                     id=""
-                    placeholder="E.g. 971022075514"
+                    placeholder="E.g. chiweic@gmail.com"
                     onChange={(e) => setSearchPerson(e.target.value)}
                   />
                   <Link to={
@@ -91,7 +91,7 @@ const Search = props => {
                   />
                   <label htmlFor="Identification">
                     {" "}
-                    Identification Number
+                    E-mail
                     </label>
                 </div>
               </form>
@@ -106,7 +106,7 @@ const Search = props => {
                     className="details"
                     name="details"
                     id=""
-                    placeholder="E.g. VAL2514"
+                    placeholder="E.g. SAD 1234"
                     onChange={(e) => { setSearchVehicle(e.target.value) }}
                   />
                   <Link to={

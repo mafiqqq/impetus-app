@@ -51,6 +51,14 @@ const driver = neo4j.driver(
   )
 );
 
+// const driver = neo4j.driver(
+//   process.env.NEO4J_URI || "bolt://hobby-eempjibellpegbkebghbffdl.dbs.graphenedb.com:24787",
+//   neo4j.auth.basic(
+//     process.env.NEO4J_USER || "impetus",
+//     process.env.NEO4J_PASSWORD || "b.4yOtHEDYPBSd.Xpznhe3UDzy8i38i"
+//   )
+// );
+
 
 //Connect to existing Neo4j instances
 // const inferAugmentedSchema = driver => {

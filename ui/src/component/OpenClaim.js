@@ -58,10 +58,9 @@ return (
                 <TabList>
                     {displayDrop(location.state.status)}
                     <Tab><h4>Claim Details</h4></Tab>
-                    <Tab><h4>Workshop</h4></Tab>
+                    <Tab><h4>Claim Graphical View</h4></Tab>
                     <Tab><h4>Location View</h4></Tab>
                 </TabList>
-
                 <TabPanel>
                     <ClaimDetails
                         claimID={location.state.claimID}
@@ -82,7 +81,6 @@ return (
                     <div className="graph">
                         <NodeGraphExpand
                             claimID={location.state.claimID} /></div>
-
                 </TabPanel>
                 <TabPanel>
                     <LocationView

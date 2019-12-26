@@ -342,7 +342,8 @@ const NodeGraphExpand = props => {
             </NeoCypher>
             <RelativeSize initialSize={35} />
             <RandomizeNodePositions />
-            </Sigma></div>} >
+            </Sigma>
+            </div>} >
       </Popup >
             </div >
 

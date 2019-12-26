@@ -37,7 +37,7 @@ function OpenCase() {
                             <h1></h1></div>
                         <Tab ><h4>Case Details</h4></Tab>
                         <Tab><h4>Alert Details</h4></Tab>
-                        <Tab><h4>Workshop</h4></Tab>
+                        <Tab><h4>Claim Graphical View</h4></Tab>
                         <Tab><h4>Location View</h4></Tab>
                     </TabList>
                     <TabPanel>

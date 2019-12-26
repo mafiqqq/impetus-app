@@ -8,6 +8,9 @@ import gql from 'graphql-tag';
 import { getCasesQuery } from '../queries/queries.js';
 import CaseList from './CaseList.js';
 import { Redirect } from 'react-router';
+// import DatePicker from "react-datepicker";
+import DatePicker from 'react-date-picker';
+// import "react-datepicker/dist/react-datepicker.css";
 
 const CREATE_CASE_MUTATION = gql`
 mutation CreateCase($caseID: Int!, $dueDate:String! , $comment:String! , $task: String!, $caseStatus: String){
@@ -76,6 +79,7 @@ const CreateACase = props => {
     const [dueDate, setDueDate] = useState("")
     const [comment, setComment] = useState("")
     const [task, setTask] = useState("")
+    const [startDate, setStartDate] = useState(new Date())
     const [caseStatus, setCaseStatus] = useState("")
     const [CreateCase, { loading, error }] = useMutation(CREATE_CASE_MUTATION, {
 
@@ -103,9 +107,33 @@ const CreateACase = props => {
         }
     })
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        console.log(caseID, dueDate, comment, task);
+    // const handleChange = date => {
+    //     setStartDate(date);
+    // }
+    // function  callDate() {
+    //     return(
+    //         <DatePicker selected={startDate} onChange={date => setStartDate(date)} ref="picker" onClickOutside={clickOutside()}/>
+    //     )
+    // }
+
+    // function clickOutside() {
+    //     this.refs.picker.cancelFocusInput();
+    //     this.refs.picker.setOpen(false);
+    // }
+    function handleSubmit(caseID, startDate, comment, task) {
+        // evt.preventDefault();
+        console.log(caseID, startDate, comment, task);
+              
+        // var startD = startDate.toString();
+        var formattedS = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate()
+        var formattedD = formattedS.toString();
+        // var dateFormat = startD.substring(4,16);
+        setCaseID(caseID);
+        setComment(comment);
+        setTask(task);
+        setDueDate(toString(formattedD));
+        console.log(formattedD);
+        console.log(task);
         CreateCase().then(() => {
             AddCaseClaims().then(() => {
                 CreateClaimLog().then(() => {
@@ -128,11 +156,11 @@ const CreateACase = props => {
     useEffect(() => {
         const localData = localStorage.getItem('caseID')
         if (localData)
-            setCaseID(JSON.parse(localData)+1);
+            setCaseID(JSON.parse(localData) + 1);
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("caseID", JSON.stringify(9000));
+        localStorage.setItem("caseID", JSON.stringify(caseID));
     })
 
     return (
@@ -147,25 +175,31 @@ const CreateACase = props => {
                         New Case {caseID}
                     </div>
 
-                    <form id="newCase" onSubmit={handleSubmit}>
+                    <form id="newCase" >
                         <div className="createCase">
                             <div className="toDo">
                                 <div className="comments">
                                     <h5>Comments</h5>
-                                    <textarea rows="7" cols="30" name="comment" form="newCase" placeHolder="Enter Comments here..." onChange={(e) => setComment(e.target.value)}>
+                                    <textarea rows="7" cols="30" name="comment" form="newCase" placeholder="Enter Comments here..." onChange={(e) => setComment(e.target.value)}>
                                     </textarea>
+                                    {/* <input type="date"></input> */}
                                 </div>
 
-                                <div className="date">
-                                    <h5>Duedate:</h5>
-                                    <input className="dueDate" type="date" min="2016-01-01" name="dueDate" form="newCase" onChange={(e) => setDueDate(e.target.value)}></input>
+                                <div className="comments">
+                                    {/* <h5>Comments</h5>
+                                    <textarea rows="7" cols="30" name="comment" form="newCase" placeholder="Enter Comments here..." onChange={(e) => setDueDate(e.target.value)}>
+                                    </textarea> */}
+                                    {/* <h5>Duedate:</h5>
+                                    <input  type="date" form="newCase" onChange={(e) => setDueDate(e.target.value)}></input> */}
+                                    {/* {callDate()} */}
+                                    <DatePicker onChange={date => setStartDate(date)} value={startDate}/>
                                 </div>
 
                             </div>
                             <div className="tasks">
 
                                 <h5>Tasks</h5>
-                                <textarea rows="10" cols="30" name="Tasks" form="newCase" placeHolder="Enter Tasks here..." onChange={(e) => setTask(e.target.value)}>
+                                <textarea rows="10" cols="30" name="Tasks" form="newCase" placeholder="Enter Tasks here..." onChange={(e) => setTask(e.target.value)}>
                                 </textarea>
                             </div>
 
@@ -174,7 +208,8 @@ const CreateACase = props => {
 
 
                         <div className="actions">
-                            <button className="button" form="newCase" >Create A Case </button>
+                            {/* <input type="submit"></input> */}
+                            <button className="button" form="newCase" onClick={() => {handleSubmit(caseID, startDate, task, comment)}}>Create A Case </button>
 
                             <button className="button" onClick={() => { close(); }}>Cancel </button>
                         </div>

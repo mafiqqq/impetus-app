@@ -105,14 +105,9 @@ class LocationView extends Component {
                     mapStyle="mapbox://styles/impetusfd/ck4d22kjj3ne51cqgukcgcy6c"
                 >
                     {this.loadAccidentMarkers()}
-                    {/* {console.log(JSON.stringify(this.state.selectedAccident))} */}
                     {this.state.selectedAccident !== null ? (
 
                         <Popup
-
-                            // latitude={this.state.selectedAccident.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d=>d.accidents.map(f => f.latitude)))))}
-                            // longitude={this.state.selectedAccident.map(x => x.involves.map(y => y.drivers.map(z => z.claims.map(d=>d.accidents.map(f => f.longitude)))))}
-                            {...console.log(this.state.selectedAccident)}
                             latitude={parseFloat(this.state.selectedAccident.accidents.map(f => f.latitude))}
                             longitude={parseFloat(this.state.selectedAccident.accidents.map(f => f.longitude))}
                             onClose={this.closePopup}

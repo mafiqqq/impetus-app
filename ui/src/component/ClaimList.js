@@ -40,71 +40,69 @@ class ClaimList extends Component {
       return <div>Loading Claims...</div>;
     } else {
       return data.Claim.map(claim => {
-        // return claim.normalScore.map(normal => {
-          return (
-            <tr id="somerow">
-              {/* onClick={ (e) => { this.setState({selected: claim.claimID})}} */}
-              <td>
-                <Link
-                  to={{
-                    pathname: "/OpenClaim",
-                    state: {
-                      claimID: claim.claimID,
-                      reportedDate: claim.reportedDate,
-                      icNum: claim.persons.map(x => x.icNum),
-                      status: claim.status,
-                      score: claim.score,
-                      description: claim.description,
-                      firstName: claim.persons.map(x => x.firstName),
-                      lastName: claim.persons.map(x => x.lastName),
-                      phoneNum: claim.persons.map(x => x.phoneNum),
-                      value: claim.value,
-                      policeNum: claim.accidents.map(x => x.policeNum)
-                    }
-                  }}
-                >
-                  {claim.claimID}
-                </Link>
-              </td>
-              <td data-status={claim.status} className="claimStatus"></td>
-              <td id="scoretd">{claim.score}</td>
-              <td>RM {claim.value}</td>
-              <td>{claim.persons.map(x => x.firstName)}</td>
-              <td>{claim.persons.map(x => x.lastName)}</td>
-              <td>{claim.accidents.map(x => x.city)}</td>
-              <td>{claim.reportedDate}</td>
-            </tr>
-          );
+        return (
+          <tr id="somerow">
+            <td>
+              <Link
+                to={{
+                  pathname: "/OpenClaim",
+                  state: {
+                    claimID: claim.claimID,
+                    reportedDate: claim.reportedDate,
+                    icNum: claim.persons.map(x => x.icNum),
+                    status: claim.status,
+                    score: claim.score,
+                    description: claim.description,
+                    firstName: claim.persons.map(x => x.firstName),
+                    lastName: claim.persons.map(x => x.lastName),
+                    phoneNum: claim.persons.map(x => x.phoneNum),
+                    value: claim.value,
+                    policeNum: claim.accidents.map(x => x.policeNum)
+                  }
+                }}
+              >
+                {claim.claimID}
+              </Link>
+            </td>
+            <td data-status={claim.status} className="claimStatus"></td>
+            <td id="scoretd">{claim.score}</td>
+            <td>RM {claim.value}</td>
+            <td>{claim.persons.map(x => x.firstName)}</td>
+            <td>{claim.persons.map(x => x.lastName)}</td>
+            <td>{claim.accidents.map(x => x.city)}</td>
+            <td>{claim.reportedDate}</td>
+          </tr>
+        );
       });
     }
   }
 
-  displayScore= ()=> {
+  displayScore = () => {
     var table = document.getElementById("claimsTable");
-    for (var i=1, row; row=table.rows[i]; i++){
-    var s = document.getElementById("claimsTable").rows[i].cells.namedItem("scoretd").innerHTML;
-    if(s < 400){
-      var data = this.props.data;
-      if(data.loading){
-        console.log("Calculating..")
-      } else {
-        var scoreCount = 0;
-      const calculateClaimValue=()=>{
-        return data.Claim.map(claim =>{
-          var value = claim.value;
-          var calcValue =(value/100)*5;
-          this.setScoreCount(calcValue);
-        },
-      console.log(this.scoreCount))
+    for (var i = 1, row; row = table.rows[i]; i++) {
+      var s = document.getElementById("claimsTable").rows[i].cells.namedItem("scoretd").innerHTML;
+      if (s < 400) {
+        var data = this.props.data;
+        if (data.loading) {
+          console.log("Calculating..")
+        } else {
+          var scoreCount = 0;
+          const calculateClaimValue = () => {
+            return data.Claim.map(claim => {
+              var value = claim.value;
+              var calcValue = (value / 100) * 5;
+              this.setScoreCount(calcValue);
+            },
+              console.log(this.scoreCount))
+          }
+
+          console.log("Hi");
+
+
+        }
+
+
       }
-
-      console.log("Hi");
-      
-      
-    }
-
-
-    } 
     }
     this.calculateClaimValue();
     // this.calculateClaimValue();    
